@@ -1,0 +1,14 @@
+.startpageContainer {
+    display: flex;
+    flex-direction: column;
+    background: red;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+}
+
+.startpageTitle {
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+}

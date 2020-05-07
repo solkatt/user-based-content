@@ -18,6 +18,7 @@ mongoose.connect('mongodb://localhost:27017/co-op-forum', { useNewUrlParser: tru
 const db = mongoose.connection;
 
 // Test User
+/*
 const newUser = new User({
     username: 'CooltNamn',
     password: 'cooltlösenord'
@@ -32,11 +33,13 @@ newUser.save(function (error, newUser) {
     }
     console.log('Successfully saved new user!')
 });
+*/
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     console.log('Connected to db with Mongoose!')
 });
+
 
 app.use(express.static('build'));
 
