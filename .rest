@@ -1,0 +1,61 @@
+// SIGN UP
+
+POST http://localhost:3001/api/account/signup
+Content-Type: application/json
+
+{
+"username": "solkatt",
+"password" : "test",
+"firstName": "Baj",
+"lastName" : "Kaj"
+}
+
+#####
+
+
+// SIGN IN
+POST http://localhost:3001/api/account/signin
+Content-Type: application/json
+
+{
+"username": "solkatt",
+"password" : "test",
+"firstName": "Baj",
+"lastName" : "Kaj"
+}
+
+#####
+
+// VERIFY
+GET http://localhost:3001/api/account/verify?token=5eb93832d7890a16ca14ae04
+Content-Type: application/json
+
+
+#####
+
+
+// LOGOUT
+GET http://localhost:3001/api/account/logout?token=5eb955ea59c00b04e19eb368
+Content-Type: application/json
+
+
+#####
+
+
+
+
+
+
+///////////
+GET http://localhost:3001/test
+Content-Type: application/json
+
+
+#####
+
+
+GET http://localhost:3001/api/account/signup/test
+Content-Type: application/json
+
+
+#####

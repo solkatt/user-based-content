@@ -1,21 +1,30 @@
 .post {
-    background: hotpink;
+    background: #C6DABF;
     display: flex;
-
     width: 100%;
+    padding: 0.4rem;
+    margin-bottom: 0.5rem;
 }
-
 
 .postImg {
     width: 10rem;
 }
 
-
-.postImg {
-    width: 10rem;
+.postInfo {
+    margin: 0.4rem;
 }
 
+.postInfo h3 {
+    margin: 0;
+    padding: 0;
+}
 
-.postImg {
-    width: 10rem;
+.postInfo h6 {
+    margin: 0;
+    padding: 0;
+}
+
+.postInfo p {
+    margin-top: 0.5rem;
+    padding: 0;
 }
