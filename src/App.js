@@ -5,6 +5,7 @@ import "./css/App.css";
 // Components
 import Wrapper from "./components/Wrapper";
 import Startpage from "./components/Startpage";
+import EditPostpage from "./components/EditPostpage";
 
 console.log("hello from app.js");
 function App() {
@@ -12,9 +13,15 @@ function App() {
     <Router>
       <Switch>
 
-        <Route path="/">
+        <Route exact path="/">
           <Wrapper>
             <Startpage />
+          </Wrapper>
+        </Route>
+
+        <Route exact path="/edit">
+          <Wrapper>
+            <EditPostpage />
           </Wrapper>
         </Route>
 

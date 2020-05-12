@@ -1,0 +1,28 @@
+.editPostContainer {
+    width: 100%;
+    margin: .5rem;
+}
+
+.editPostContainer > form {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.editPostContainer > form input, .editPostContainer > form textarea {
+    width: 100%;
+    border-radius: .5rem;
+    border: 0;
+    font-size: 1rem;
+    padding: 1rem;
+}
+
+.editPostContainer > form input, .editPostContainer > form textarea {
+    margin: .5rem 0;
+
+}
+
+textarea {
+    resize: none;
+}
