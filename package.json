@@ -1,43 +1,44 @@
 {
-  "name": "co-op-forum",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "concurrently": "^5.2.0",
-    "express": "^4.17.1",
-    "mongoose": "^5.9.12",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.3",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.4.1"
-  },
-  "scripts": {
-    "build": "react-scripts build",
-    "watch-server": "nodemon backend/server.js",
-    "watch-client": "react-scripts start",
-    "start": "node backend/server.js",
-    "watch": "concurrently -k -n \"React,NodeJS\" -p \"[{name}]\" -c \"blue.bold,magenta.bold\" \"npm run watch-client\" \"npm run watch-server\""
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "babel-preset-env": "^1.7.0"
-  },
-  "proxy": "http://localhost:3000"
+	"name": "co-op-forum",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"bcrypt": "^4.0.1",
+		"body-parser": "^1.19.0",
+		"concurrently": "^5.2.0",
+		"express": "^4.17.1",
+		"mongoose": "^5.9.12",
+		"morgan": "^1.10.0",
+		"nodemon": "^2.0.3",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-router-dom": "^5.1.2",
+		"react-scripts": "^3.4.1"
+	},
+	"scripts": {
+		"build": "react-scripts build",
+		"watch-server": "nodemon backend/server.js",
+		"watch-client": "react-scripts start",
+		"start": "node backend/server.js",
+		"watch": "concurrently -k -n \"React,NodeJS\" -p \"[{name}]\" -c \"blue.bold,magenta.bold\" \"npm run watch-client\" \"npm run watch-server\""
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"babel-preset-env": "^1.7.0"
+	},
+	"proxy": "http://localhost:3001"
 }
