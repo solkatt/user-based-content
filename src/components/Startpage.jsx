@@ -20,6 +20,7 @@ function Startpage() {
 				}
 			/>
 			<Home />
+			
 		</div>
 	)
 }

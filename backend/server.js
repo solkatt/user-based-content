@@ -3,12 +3,14 @@ const mongoose = require('mongoose')
 const path = require('path')
 const User = require('./models/User')
 
+
 const port = process.env.PORT || 3001
 const host = process.env.HOST || 'localhost'
 
 const app = express()
 
 const signin = require('./routes/signin')
+const currentUser = require('./routes/getCurrentUser')
 
 mongoose.connect(
 	'mongodb://localhost:27017/co-op-forum',
@@ -53,6 +55,8 @@ app.use(express.static('build'))
 app.use(express.json())
 
 app.use('/api/account/', signin)
+app.use('/api/account/user', currentUser)
+
 
 app.get('/test', (req, res) => {
 	res.send('TJEENA')

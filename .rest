@@ -54,7 +54,7 @@ Content-Type: application/json
 #####
 
 
-GET http://localhost:3001/api/account/signup/test
+GET http://localhost:3001/api/account/user/data?token=5ebaef1f31d1e08ba09b4824
 Content-Type: application/json
 
 
