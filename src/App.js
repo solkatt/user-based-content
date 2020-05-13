@@ -6,7 +6,7 @@ import { UserProvider } from './contexts/UserContext'
 // Components
 import Wrapper from "./components/Wrapper";
 import Startpage from "./components/Startpage";
-import EditPostpage from "./components/EditPostpage";
+import Postpage from "./components/Postpage";
 
 console.log('hello from app.js')
 function App() {
@@ -21,9 +21,9 @@ function App() {
           </Wrapper>
         </Route>
 
-        <Route exact path="/edit">
+        <Route exact path="/new">
           <Wrapper>
-            <EditPostpage />
+            <Postpage />
           </Wrapper>
         </Route>
 
