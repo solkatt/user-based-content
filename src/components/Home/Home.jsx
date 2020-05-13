@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { getFromStorage, setInStorage } from '../../utils/storage'
+import { getFromStorage, setInStorage, removeFromStorage } from '../../utils/storage'
 
 export default class Home extends Component {
 	constructor(props) {
@@ -189,6 +189,7 @@ export default class Home extends Component {
 							token: '',
 							isLoading: false,
 						})
+						removeFromStorage('storage-object', { token: json.token })
 					} else {
 						this.setState({
 							isLoading: false,

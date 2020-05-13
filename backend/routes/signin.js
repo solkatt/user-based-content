@@ -83,7 +83,7 @@ router.post('/signup', (req, res, next) => {
 router.post('/signin', (req, res, next) => {
 	const { body } = req
 	// console.log(req)
-	let { firstName, lastName, username, password } = body
+	let { username, password } = body
 
 	if (!username) {
 		return res.end({
