@@ -1,10 +1,14 @@
+const cors = require("cors")
+
 module.exports = (app, gfs, upload) => {
     const controller = require('../controller/postController')
+
+    app.use(cors())
 
     // Create new post
     app.post("/api/post/new", upload.single('file'), controller.createPost)
 
-    // Get post
+    // Get post - Behöver göras?!
     app.get("/api/post/:id")
 
     // Get a single image from filename
