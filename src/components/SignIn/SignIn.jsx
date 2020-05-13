@@ -5,13 +5,14 @@ import {
 	removeFromStorage,
 } from '../../utils/storage'
 import './SignIn.css'
-import '../../css/profileSidebar.css'
-import { Redirect } from 'react-router-dom'
 
 // ICONS
 import { FaTimesCircle } from 'react-icons/fa'
 
 //
+
+
+
 export default class SignIn extends Component {
 	constructor(props) {
 		super(props)
@@ -21,7 +22,6 @@ export default class SignIn extends Component {
 			signInError: '',
 			signInUsername: '',
 			signInPassword: '',
-			createPost: false,
 		}
 
 		this.onChangeSignInUsername = this.onChangeSignInUsername.bind(this)
@@ -67,6 +67,10 @@ export default class SignIn extends Component {
 		})
 	}
 
+
+	
+
+
 	onSignIn() {
 		const { signInUsername, signInPassword } = this.state
 
@@ -103,6 +107,10 @@ export default class SignIn extends Component {
 						signInError: json.message,
 						isLoading: false,
 					})
+					// set Sign In Popup Message not hidden
+					// this.signInErrorMsg(this.state.signInError)
+
+
 				}
 			})
 	}
@@ -154,6 +162,8 @@ export default class SignIn extends Component {
 		popUp.classList.remove('hidden')
 	}
 
+
+
 	render() {
 		const {
 			isLoading,
@@ -161,7 +171,6 @@ export default class SignIn extends Component {
 			signInError,
 			signInUsername,
 			signInPassword,
-			createPost
 		} = this.state
 
 		if (isLoading) {
@@ -175,7 +184,10 @@ export default class SignIn extends Component {
 		if (!token) {
 			return (
 				<>
-					<div className=''>
+
+					{{ signInError } ? <div className="errorMsg"><p>{signInError}</p></div> : null}
+
+					<div className='profileContainer'>
 						<button type='button' onClick={this.openSignIn}>
 							Sign In
 						</button>
@@ -183,14 +195,20 @@ export default class SignIn extends Component {
 							Sign Up
 						</button>
 					</div>
+
+							{/* {{signInError} ? this.signInErrorMsg('äggFlärp') : null} */}
+
+
 					<div className='sign-in-container hidden'>
 						<div className='sign-in-box'>
-							{{ signInError } ? <p>{signInError}</p> : null}
-							<FaTimesCircle
-								className='close-icon'
-								onClick={this.closeSignIn}
-							/>
-							<p>Sign In</p>
+
+							<div>
+								<p>Sign In</p>
+								<FaTimesCircle
+									className='close-icon'
+									onClick={this.closeSignIn}
+								/>
+							</div>
 							<input
 								type='text'
 								placeholder='Username'
@@ -216,13 +234,10 @@ export default class SignIn extends Component {
 		}
 
 		return (
-			<div className='profileSidebar'>
-				<h3>Hej {signInUsername}! </h3>
+			<div className='profileContainer'>
+				<h3>Hello {signInUsername}! </h3>
 				<button type='button'>Your Posts</button>
-				<button type='button' onClick={() => { this.setState({ createPost: true }); console.log(this.state.createPost, "click") }}>
-					Create New Post
-				{this.state.createPost && <Redirect to="/new" />}
-				</button>
+				<button type='button'>Create New Post</button>
 				<button type='button' onClick={this.logout}>
 					Log Out
 				</button>

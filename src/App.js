@@ -1,12 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import './css/App.css'
 import { UserProvider } from './contexts/UserContext'
 
 // Components
-import Wrapper from "./components/Wrapper";
-import Startpage from "./components/Startpage";
-import Postpage from "./components/Postpage";
+import Wrapper from './components/Wrapper/Wrapper'
+import Startpage from './components/Startpage/Startpage'
 
 console.log('hello from app.js')
 function App() {
@@ -14,20 +12,13 @@ function App() {
 		<UserProvider>
 			<Router>
 				<Switch>
+					<Route path='/'>
+						<Wrapper>
+							<Startpage />
+						</Wrapper>
+					</Route>
 
-        <Route exact path="/">
-          <Wrapper>
-            <Startpage />
-          </Wrapper>
-        </Route>
-
-        <Route exact path="/new">
-          <Wrapper>
-            <Postpage />
-          </Wrapper>
-        </Route>
-
-        {/* <Route path="/new-post">
+					{/* <Route path="/new-post">
           <Wrapper>
             <CreatePostPage />
           </Wrapper>

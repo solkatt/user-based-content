@@ -114,7 +114,7 @@ router.post('/signin', (req, res, next) => {
 			if (users.length != 1) {
 				return res.send({
 					success: false,
-					message: 'Error: Invalid',
+					message: 'Error: Invalid Username',
 				})
 			}
 
