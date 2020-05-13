@@ -5,6 +5,7 @@ import { UserProvider } from './contexts/UserContext'
 // Components
 import Wrapper from './components/Wrapper/Wrapper'
 import Startpage from './components/Startpage/Startpage'
+import Postpage from "./components/Postpage/Postpage"
 
 console.log('hello from app.js')
 function App() {
@@ -12,9 +13,15 @@ function App() {
 		<UserProvider>
 			<Router>
 				<Switch>
-					<Route path='/'>
+					<Route exact path='/'>
 						<Wrapper>
 							<Startpage />
+						</Wrapper>
+					</Route>
+
+					<Route exact path='/new'>
+						<Wrapper>
+							<Postpage />
 						</Wrapper>
 					</Route>
 

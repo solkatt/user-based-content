@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import {
 	getFromStorage,
 	setInStorage,
@@ -22,6 +23,8 @@ export default class SignIn extends Component {
 			signInError: '',
 			signInUsername: '',
 			signInPassword: '',
+			createPost: false,
+            userPosts: false,
 		}
 
 		this.onChangeSignInUsername = this.onChangeSignInUsername.bind(this)
@@ -235,13 +238,19 @@ export default class SignIn extends Component {
 
 		return (
 			<div className='profileContainer'>
-				<h3>Hello {signInUsername}! </h3>
-				<button type='button'>Your Posts</button>
-				<button type='button'>Create New Post</button>
-				<button type='button' onClick={this.logout}>
-					Log Out
-				</button>
-			</div>
+			<h3>Hej {signInUsername}! </h3>
+			<button type='button' onClick={() => { this.setState({ userPosts: true }); console.log(this.state.userPosts, "click") }}>
+				Your Posts
+				{this.state.userPosts && <Redirect to="/post" />}
+			</button>
+			<button type='button' onClick={() => { this.setState({ createPost: true }); console.log(this.state.createPost, "click") }}>
+				Create New Post
+				{this.state.createPost && <Redirect to="/new" />}
+			</button>
+			<button type='button' onClick={this.logout}>
+				Log Out
+			</button>
+		</div>
 		)
 	}
 }
