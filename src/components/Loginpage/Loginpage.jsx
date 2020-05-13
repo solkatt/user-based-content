@@ -7,7 +7,7 @@ function Startpage() {
   return (
         <div className="loginContainer">
             <h1 className="startpageTitle">Coop Forum!</h1>
-            <Post title={'Logga in'} description={'Logga in här'} />
+            {/* <Post title={'Logga in'} description={'Logga in här'} /> */}
         </div>
     )
 }

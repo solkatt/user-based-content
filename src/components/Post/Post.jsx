@@ -1,21 +1,24 @@
 import React from "react";
 import "./post.css";
 
-let date = new Date()
+class Post extends React.Component {
+  render() {
+    return (
+      <div className="post">
+        {Object.keys(this.props.data).map((key) => {
+          if (key === 'image') {
+            return <img
+              className={`_${key}`}
+              key={`_${key}`}
+              src={`http://localhost:3001/api/post/image/${this.props.data[key].filename}`} />
 
-function Post(props) {
-  return (
-    <div className="post">
-      <div>
-          <img alt="chicken" className="postImg" src={props.imageSource} />
+          } else {
+            return <p className={`_${key}`} key={`_${key}`}>{JSON.stringify(key).replace(/\"/g, "")}: {JSON.stringify(this.props.data[key]).replace(/\"/g, "")}</p>
+          }
+        })}
       </div>
-      <div className="postInfo">
-        <h3>{props.title}</h3>
-        <h6>Date: {date.getDate()}/{date.getMonth() + 1} - {date.getFullYear()}</h6>
-        <p>{props.description} </p>
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Post;

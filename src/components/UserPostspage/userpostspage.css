@@ -1,0 +1,47 @@
+/* Post ID */
+.__id {
+    background-color: palevioletred;
+}
+/* User (post author) ID */
+._user {
+    background-color: paleturquoise;
+}
+
+/* Post title */
+._title {
+    background-color: palegreen;
+}
+
+/* Post body (text) */
+._text {
+    background-color: palegoldenrod;
+}
+
+._createdAt {
+    background-color: papayawhip;
+}
+
+/* All posts container */
+.userPostsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Each post container */
+.userPostsContainer > .post {
+    display: flex;
+    flex-direction: column;
+    max-width: 30rem;
+    max-height: 20rem;
+    flex-wrap: wrap;
+}
+
+.userPostsContainer > .post > p {
+    font-size: .8rem;
+}
+
+.userPostsContainer > .post > img {
+    width: 100%;
+    object-fit: cover;
+    height: 5rem;
+}

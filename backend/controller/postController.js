@@ -46,3 +46,15 @@ exports.getImageByFilename = (req, res, gfs) => {
         }
     });
 }
+
+exports.getUserPosts = async (req, res) => {
+    try {
+        const user = await Post.find({ user: req.params.id }, (error, userPosts) => {
+            return userPosts
+        })
+        res.send({ allUserPosts: user })
+    } catch (error) {
+        console.log(error)
+        res.end()
+    }
+}

@@ -24,7 +24,7 @@ export default class SignIn extends Component {
 			signInUsername: '',
 			signInPassword: '',
 			createPost: false,
-            userPosts: false,
+			userPosts: false
 		}
 
 		this.onChangeSignInUsername = this.onChangeSignInUsername.bind(this)
@@ -173,7 +173,7 @@ export default class SignIn extends Component {
 			token,
 			signInError,
 			signInUsername,
-			signInPassword,
+			signInPassword
 		} = this.state
 
 		if (isLoading) {
@@ -237,20 +237,20 @@ export default class SignIn extends Component {
 		}
 
 		return (
-			<div className='profileContainer'>
-			<h3>Hej {signInUsername}! </h3>
-			<button type='button' onClick={() => { this.setState({ userPosts: true }); console.log(this.state.userPosts, "click") }}>
-				Your Posts
-				{this.state.userPosts && <Redirect to="/post" />}
-			</button>
-			<button type='button' onClick={() => { this.setState({ createPost: true }); console.log(this.state.createPost, "click") }}>
-				Create New Post
-				{this.state.createPost && <Redirect to="/new" />}
-			</button>
-			<button type='button' onClick={this.logout}>
-				Log Out
-			</button>
-		</div>
+			<div className='profileSidebar'>
+				<h3>Hej {signInUsername}! </h3>
+				<button type='button' onClick={() => { this.setState({ userPosts: true }); console.log(this.state.userPosts, "click") }}>
+					Your Posts
+					{this.state.userPosts && <Redirect to="/post" />}
+				</button>
+				<button type='button' onClick={() => { this.setState({ createPost: true }); console.log(this.state.createPost, "click") }}>
+					Create New Post
+					{this.state.createPost && <Redirect to="/new" />}
+				</button>
+				<button type='button' onClick={this.logout}>
+					Log Out
+				</button>
+			</div>
 		)
 	}
 }
