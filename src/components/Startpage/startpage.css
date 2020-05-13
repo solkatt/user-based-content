@@ -22,3 +22,12 @@
     color: #114B5F;
     align-items: center;
 }
+
+.post, .post > * {
+    width: 80%;
+}
+
+.post img {
+    width: 10rem;
+    object-fit: contain;
+}

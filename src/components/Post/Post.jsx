@@ -11,7 +11,8 @@ class Post extends React.Component {
               className={`_${key}`}
               key={`_${key}`}
               src={`http://localhost:3001/api/post/image/${this.props.data[key].filename}`} />
-
+          } else if (key === '__v') {
+            return null
           } else {
             return <p className={`_${key}`} key={`_${key}`}>{JSON.stringify(key).replace(/\"/g, "")}: {JSON.stringify(this.props.data[key]).replace(/\"/g, "")}</p>
           }
