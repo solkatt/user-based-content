@@ -47,14 +47,25 @@ exports.getImageByFilename = (req, res, gfs) => {
     });
 }
 
+exports.getAllPosts = async (req, res) => {
+    try {
+        const posts = await Post.find({}, (error, userPosts) => {
+            return userPosts
+        }).sort({ '_id': 'desc' })
+        res.status(200).send({ allUserPosts: posts })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 exports.getUserPosts = async (req, res) => {
     try {
         const user = await Post.find({ user: req.params.id }, (error, userPosts) => {
             return userPosts
         })
-        res.send({ allUserPosts: user })
+        res.status(200).send({ allUserPosts: user })
     } catch (error) {
         console.log(error)
-        res.end()
+        res.status(500).send({ success: false, message: "Failed to fetch all posts" })
     }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './userpostspage.css'
 import Post from '../Post/Post'
+import { Redirect } from 'react-router-dom'
 
 class UserPostspage extends Component {
     constructor(props) {
@@ -9,7 +10,8 @@ class UserPostspage extends Component {
             isLoading: true,
             postsJSON: [],
             postsElements: [],
-            userId: this.props.user.userId
+            userId: this.props.user.userId,
+            backToStartpage: false
         }
     }
 
@@ -44,11 +46,13 @@ class UserPostspage extends Component {
     }
 
     render() {
-        const { isLoading, postsElements, userId } = this.state
+        const { isLoading, backToStartpage, postsElements, userId } = this.state
 
         return (
-            isLoading ? <p>Loading...</p>
+            isLoading && !backToStartpage ? <p>Loading...</p>
                 : <div className="userPostsContainer">
+                    {!isLoading && backToStartpage && <><p>Loading...</p><Redirect to="/" /></>}
+                    <button type="button" onClick={() => this.setState({ backToStartpage: true })}>Tillbaka till startsidan</button>
                     <p>Hello {userId}</p>
                     {postsElements}
                 </div>
