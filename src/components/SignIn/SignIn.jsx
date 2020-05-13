@@ -6,6 +6,7 @@ import {
 } from '../../utils/storage'
 import './SignIn.css'
 import '../../css/profileSidebar.css'
+import { Redirect } from 'react-router-dom'
 
 // ICONS
 import { FaTimesCircle } from 'react-icons/fa'
@@ -20,6 +21,7 @@ export default class SignIn extends Component {
 			signInError: '',
 			signInUsername: '',
 			signInPassword: '',
+			createPost: false,
 		}
 
 		this.onChangeSignInUsername = this.onChangeSignInUsername.bind(this)
@@ -159,6 +161,7 @@ export default class SignIn extends Component {
 			signInError,
 			signInUsername,
 			signInPassword,
+			createPost
 		} = this.state
 
 		if (isLoading) {
@@ -216,7 +219,10 @@ export default class SignIn extends Component {
 			<div className='profileSidebar'>
 				<h3>Hej {signInUsername}! </h3>
 				<button type='button'>Your Posts</button>
-				<button type='button'>Create New Post</button>
+				<button type='button' onClick={() => { this.setState({ createPost: true }); console.log(this.state.createPost, "click") }}>
+					Create New Post
+				{this.state.createPost && <Redirect to="/new" />}
+				</button>
 				<button type='button' onClick={this.logout}>
 					Log Out
 				</button>

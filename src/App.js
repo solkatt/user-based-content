@@ -4,8 +4,9 @@ import './css/App.css'
 import { UserProvider } from './contexts/UserContext'
 
 // Components
-import Wrapper from './components/Wrapper'
-import Startpage from './components/Startpage'
+import Wrapper from "./components/Wrapper";
+import Startpage from "./components/Startpage";
+import Postpage from "./components/Postpage";
 
 console.log('hello from app.js')
 function App() {
@@ -13,13 +14,20 @@ function App() {
 		<UserProvider>
 			<Router>
 				<Switch>
-					<Route path='/'>
-						<Wrapper>
-							<Startpage />
-						</Wrapper>
-					</Route>
 
-					{/* <Route path="/new-post">
+        <Route exact path="/">
+          <Wrapper>
+            <Startpage />
+          </Wrapper>
+        </Route>
+
+        <Route exact path="/new">
+          <Wrapper>
+            <Postpage />
+          </Wrapper>
+        </Route>
+
+        {/* <Route path="/new-post">
           <Wrapper>
             <CreatePostPage />
           </Wrapper>
