@@ -10,7 +10,7 @@ function Startpage() {
 		<div className='startpageContainer'>
 			<div className='startpageHeader'>
 				<h1 className='startpageTitle'>Coop Forum!</h1>
-				<ProfileSidebar />
+				{/* <ProfileSidebar /> */}
 			</div>
 			<Post
 				imageSource='https://images.unsplash.com/photo-1515542743364-f002238fe5f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'

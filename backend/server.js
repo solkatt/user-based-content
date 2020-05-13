@@ -8,6 +8,7 @@ const GridFsStorage = require("multer-gridfs-storage")
 const cors = require("cors")
 const crypto = require("crypto")
 
+
 const port = process.env.PORT || 3001
 const host = process.env.HOST || 'localhost'
 
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors({ origin: "http://localhost:3000" }))
 
 const signin = require('./routes/signin')
+const currentUser = require('./routes/getCurrentUser')
 
 mongoose.connect(
     'mongodb://localhost:27017/co-op-forum',
@@ -67,6 +69,8 @@ db.once('open', function () {
 app.use(express.static('build'))
 
 app.use('/api/account/', signin)
+app.use('/api/account/user', currentUser)
+
 
 const storage = new GridFsStorage({
     url: "mongodb://localhost:27017/co-op-forum",

@@ -1,0 +1,31 @@
+.sign-in-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    background: rgba(0, 0, 0, 0.356);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.sign-in-box {
+
+    background: ivory;
+    padding: 2rem;
+    border-radius: .3rem;
+}
+
+.close-icon {
+    display: flex;
+    font-size: 1.3rem;
+    top: -1rem;
+    right: -8rem;
+}
+
+.hidden {
+    display: none;
+}
