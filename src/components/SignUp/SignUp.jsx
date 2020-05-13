@@ -110,11 +110,14 @@ export default class SignUp extends Component {
 			<div className='sign-up-container hidden'>
 				<div className='sign-up-box'>
 					{signUpError ? <p>{signUpError}</p> : null}
-					<FaTimesCircle
-						className='close-icon'
-						onClick={this.closeSignUp}
-					/>
-					<p>Sign Up</p>
+
+					<div>
+						<p>Sign Up</p>
+						<FaTimesCircle
+							className='close-icon'
+							onClick={this.closeSignUp}
+						/>
+					</div>
 					<input
 						type='text'
 						placeholder='First Name'

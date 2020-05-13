@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import "../css/editpostpage.css"
-import trashIcon from "../assets/iconfinder_trash.png"
-import ProfileSidebar from './ProfileSidebar'
-import { UserConsumer } from '../contexts/UserContext'
+import "./editpostpage.css"
+import trashIcon from "../../assets/iconfinder_trash.png"
+import { UserConsumer } from '../../contexts/UserContext'
 import { Redirect } from 'react-router-dom'
+import SignIn from "../SignIn/SignIn"
+
 class Postpage extends Component {
     constructor(props) {
         super(props)
@@ -27,7 +28,7 @@ class Postpage extends Component {
             <UserConsumer>
                 {(userState) => (
                     <>
-                        <ProfileSidebar />
+                        <SignIn />
                         <div className="editPostContainer">
                             <h1>Skapa post</h1>
                             <form onSubmit={this.handleSubmit} ref={this.formRef}>

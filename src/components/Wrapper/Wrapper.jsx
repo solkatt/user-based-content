@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/wrapper.css"
+import "./wrapper.css"
 
 function Wrapper({ children }) {
   return <div className="wrapper">{children}</div>;
