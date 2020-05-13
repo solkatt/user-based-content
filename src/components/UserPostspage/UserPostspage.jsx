@@ -44,13 +44,13 @@ class UserPostspage extends Component {
     }
 
     render() {
-        const { isLoading, postsElements: posts, userId } = this.state
+        const { isLoading, postsElements, userId } = this.state
 
         return (
             isLoading ? <p>Loading...</p>
                 : <div className="userPostsContainer">
                     <p>Hello {userId}</p>
-                    {posts}
+                    {postsElements}
                 </div>
 
         )
