@@ -1,12 +1,12 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { UserProvider, UserConsumer } from './contexts/UserContext'
-
+import './index.css'
 // Components
-import Wrapper from "./components/Wrapper";
-import Startpage from "./components/Startpage";
-import Postpage from "./components/Postpage";
-import NewPost from "./components/NewPost"
+import Wrapper from "./components/Wrapper/Wrapper";
+import Startpage from "./components/Startpage/Startpage";
+import Postpage from "./components/Postpage/Postpage";
+import UserPostspage from "./components/UserPostspage/UserPostspage";
 
 console.log('hello from app.js')
 function App() {
@@ -31,7 +31,7 @@ function App() {
             <UserConsumer>
               {(userState) => (
                 <Wrapper>
-                  <NewPost user={userState}/>
+                  <UserPostspage user={userState}/>
                 </Wrapper>
               )}
             </UserConsumer>
