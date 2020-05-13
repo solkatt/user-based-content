@@ -1,29 +1,34 @@
 import React, { Component } from 'react'
-import { getFromStorage, setInStorage, removeFromStorage } from '../../utils/storage'
+import {
+	getFromStorage,
+	setInStorage,
+	removeFromStorage,
+} from '../../utils/storage'
+import './SignIn.css'
+import '../../css/profileSidebar.css'
 
+// ICONS
+import { FaTimesCircle } from 'react-icons/fa'
+
+//
 export default class SignIn extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            isLoading: true,
-            token: '', // Are signed in
-            signInError: '',
+	constructor(props) {
+		super(props)
+		this.state = {
+			isLoading: true,
+			token: '', // Are signed in
+			signInError: '',
 			signInUsername: '',
 			signInPassword: '',
-        }
+		}
 
+		this.onChangeSignInUsername = this.onChangeSignInUsername.bind(this)
+		this.onChangeSignInPassword = this.onChangeSignInPassword.bind(this)
+		this.onSignIn = this.onSignIn.bind(this)
+		this.logout = this.logout.bind(this)
+		this.closeSignIn = this.closeSignIn.bind(this)
+	}
 
-        this.onChangeSignInUsername = this.onChangeSignInUsername.bind(this)
-        this.onChangeSignInPassword = this.onChangeSignInPassword.bind(this)
-        this.onSignIn = this.onSignIn.bind(this)
-        this.logout = this.logout.bind(this)
-
-
-
-    }
-
-
-    
 	componentDidMount() {
 		const obj = getFromStorage('storage-object')
 		if (obj && obj.token) {
@@ -60,10 +65,6 @@ export default class SignIn extends Component {
 		})
 	}
 
-
-
-
-    
 	onSignIn() {
 		const { signInUsername, signInPassword } = this.state
 
@@ -120,7 +121,9 @@ export default class SignIn extends Component {
 							token: '',
 							isLoading: false,
 						})
-						removeFromStorage('storage-object', { token: json.token })
+						removeFromStorage('storage-object', {
+							token: json.token,
+						})
 					} else {
 						this.setState({
 							isLoading: false,
@@ -134,6 +137,21 @@ export default class SignIn extends Component {
 		}
 	}
 
+	closeSignIn() {
+		let popUp = document.querySelector('.sign-in-container')
+		popUp.classList.add('hidden')
+	}
+
+	openSignIn() {
+		let popUp = document.querySelector('.sign-in-container')
+		popUp.classList.remove('hidden')
+	}
+
+	openSignUp() {
+		let popUp = document.querySelector('.sign-up-container')
+		popUp.classList.remove('hidden')
+	}
+
 	render() {
 		const {
 			isLoading,
@@ -141,7 +159,6 @@ export default class SignIn extends Component {
 			signInError,
 			signInUsername,
 			signInPassword,
-		
 		} = this.state
 
 		if (isLoading) {
@@ -154,38 +171,52 @@ export default class SignIn extends Component {
 
 		if (!token) {
 			return (
-				<div>
-					<div>
-						{{ signInError } ? <p>{signInError}</p> : null}
-						<p>Sign In</p>
-						<input
-							type='text'
-							placeholder='Username'
-							defaultValue={signInUsername}
-							onChange={this.onChangeSignInUsername}
-						/>
-						<br />
-						<input
-							type='password'
-							placeholder='Password'
-							defaultValue={signInPassword}
-							onChange={this.onChangeSignInPassword}
-						/>
-						<br />
-						<button onClick={this.onSignIn}>Sign In</button>
+				<>
+					<div className=''>
+						<button type='button' onClick={this.openSignIn}>
+							Sign In
+						</button>
+						<button type='button' onClick={this.openSignUp}>
+							Sign Up
+						</button>
 					</div>
-					<br />
-					<br />
-					<br />
-                    </div>
-					
+					<div className='sign-in-container hidden'>
+						<div className='sign-in-box'>
+							{{ signInError } ? <p>{signInError}</p> : null}
+							<FaTimesCircle
+								className='close-icon'
+								onClick={this.closeSignIn}
+							/>
+							<p>Sign In</p>
+							<input
+								type='text'
+								placeholder='Username'
+								defaultValue={signInUsername}
+								onChange={this.onChangeSignInUsername}
+							/>
+							<br />
+							<input
+								type='password'
+								placeholder='Password'
+								defaultValue={signInPassword}
+								onChange={this.onChangeSignInPassword}
+							/>
+							<br />
+							<button onClick={this.onSignIn}>Sign In</button>
+						</div>
+						<br />
+						<br />
+						<br />
+					</div>
+				</>
 			)
 		}
 
 		return (
-			<div>
-				<p>Account</p>
-		<h2>{signInUsername}</h2>
+			<div className='profileSidebar'>
+				<h3>Hej {signInUsername}! </h3>
+				<button type='button'>Your Posts</button>
+				<button type='button'>Create New Post</button>
 				<button type='button' onClick={this.logout}>
 					Log Out
 				</button>
