@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import "./editpostpage.css"
 import trashIcon from "../../assets/iconfinder_trash.png"
 import { UserConsumer } from '../../contexts/UserContext'
 import { Redirect } from 'react-router-dom'
 import SignIn from "../SignIn/SignIn"
 
-class Postpage extends Component {
+class EditPostspage extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -130,4 +129,4 @@ class Postpage extends Component {
     }
 }
 
-export default Postpage
+export default EditPostspage

@@ -5,8 +5,10 @@ import './index.css'
 // Components
 import Wrapper from "./components/Wrapper/Wrapper";
 import Startpage from "./components/Startpage/Startpage";
-import Postpage from "./components/Postpage/Postpage";
-import UserPostspage from "./components/UserPostspage/UserPostspage";
+import Postpage from "./components/CreateNewPostpage/CreateNewPostpage";
+import UserPostspage from "./components/YourPostspage/YourPostspage";
+import Editpage from "./components/EditPostspage/EditPostspage";
+
 
 console.log('hello from app.js')
 function App() {
@@ -24,6 +26,12 @@ function App() {
           <Route exact path="/new">
             <Wrapper>
               <Postpage />
+            </Wrapper>
+          </Route>
+
+          <Route exact path="/edit">
+            <Wrapper>
+              <Editpage />
             </Wrapper>
           </Route>
 

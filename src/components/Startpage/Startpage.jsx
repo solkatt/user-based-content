@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import '../Post/post.css'
+import '../RenderPost/RenderPost.css'
 import './startpage.css'
 
-import Post from '../Post/Post'
+import Post from '../RenderPost/RenderPost'
 import SignIn from '../SignIn/SignIn'
 import SignUp from '../SignUp/SignUp'
 
@@ -30,7 +30,11 @@ class Startpage extends Component {
 	}
 
 	renderPosts = (posts) => {
-        const allPosts = posts.map(post => { return <Post key={post._id} data={post} /> })
+        const allPosts = posts.map(post => { 
+			return (
+			<Post key={post._id} data={post}
+			 /> 
+			 )})
         return allPosts
 	}
 	

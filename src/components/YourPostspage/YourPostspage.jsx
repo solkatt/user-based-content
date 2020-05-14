@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import './userpostspage.css'
-import Post from '../Post/Post'
+import './YourPostspage.css'
+import Post from '../RenderPost/RenderPost'
 import { Redirect } from 'react-router-dom'
 
 class UserPostspage extends Component {
@@ -13,6 +13,8 @@ class UserPostspage extends Component {
             userId: this.props.user.userId,
             backToStartpage: false
         }
+
+        this.editPage = this.editPage.bind(this)
     }
 
     async fetchPosts() {
@@ -30,11 +32,27 @@ class UserPostspage extends Component {
 
     }
 
+
+    editPage(post) {
+        alert(post)
+
+        // BYTA TILL /EDITSIDAN
+        //SKICKA MED POST OCH AUTOFYLL
+        // ISTÄLLET FÖR SKAPA, UPPDATERA BEFINTLIG POST
+        // console.log(post)
+    }
     /**
      * Create post elements from fetched data
      */
     renderPosts = (posts) => {
-        const allPosts = posts.map(post => { return <Post key={post._id} data={post} /> })
+        const allPosts = posts.map(post => {
+             return (  
+                 <div>
+             <Post key={post._id} data={post} />
+             <button type="button" onClick={() => this.editPage(post) && <Redirect to="/edit"></Redirect>}>Edit Page</button>
+             </div>
+             
+             ) })
         return allPosts
     }
 
