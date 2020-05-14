@@ -3,7 +3,7 @@ import './YourPostspage.css'
 import Post from '../RenderPost/RenderPost'
 import { Redirect } from 'react-router-dom'
 
-class UserPostspage extends Component {
+class YourPostspage extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -79,4 +79,4 @@ class UserPostspage extends Component {
     }
 }
 
-export default UserPostspage
+export default YourPostspage

@@ -29,7 +29,7 @@ class EditPostspage extends Component {
                     <>
                         <SignIn />
                         <div className="editPostContainer">
-                            <h1>Skapa post</h1>
+                            <h1>Redigera post</h1>
                             <form onSubmit={this.handleSubmit} ref={this.formRef}>
                                 <label htmlFor="title">
                                     Titel:
