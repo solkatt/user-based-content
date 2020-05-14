@@ -8,7 +8,7 @@ class EditPostspage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: "",
+            title: '',
             text: "",
             file: "",
             fileName: "",
@@ -27,19 +27,54 @@ class EditPostspage extends Component {
             <UserConsumer>
                 {(userState) => (
                     <>
+
+{/* <div className="postInfo">
+        {
+          Object.keys(this.props.data).map((key) => {
+            if (key === 'image') {
+              return <div><img
+                className={`_${key} postImg`}
+                key={`_${key}`}
+                src={`http://localhost:3001/api/post/image/${this.props.data[key].filename}`} /></div>
+            } else if (key === '__v') {
+              return null
+            } else { return null }
+          })
+        }
+        <h3>{this.props.data.title}</h3>
+        <h6>{this.props.data.createdAt}</h6>
+        {
+          Object.keys(this.props.data).map((key) => {
+            if (key === 'text') {
+              return <p className={`_${key}`} key={`_${key}`}>{JSON.stringify(this.props.data[key]).replace(/\"/g, "")}</p>
+            } else { return null }
+          })
+        }
+      </div> */}
+
+
+
+
+
+
+
+
                         <SignIn />
                         <div className="editPostContainer">
-                            <h1>Redigera post</h1>
+
+                            <h3></h3>
+    <h1>Redigera post {this.props.data._id}</h1>
+                            <h2></h2>
                             <form onSubmit={this.handleSubmit} ref={this.formRef}>
                                 <label htmlFor="title">
                                     Titel:
-                                <input type="text" name="title" id="title" placeholder="Skriv din titel här..." onChange={this.handleChange} />
+                                <input type="text" name="title" id="title" defaultValue={this.props.data.title} placeholder="Skriv din titel här..." onChange={this.handleChange} />
                                 </label>
                                 <label htmlFor="text">
-                                    <textarea value={this.state.postText} name="text" id="text" cols="30" rows="10" placeholder="Skriv något kul här..." onChange={this.handleChange} />
+                                    <textarea value={this.state.postText} name="text" id="text" cols="30" rows="10" defaultValue={this.props.data.text} placeholder="Skriv något kul här..." onChange={this.handleChange} />
                                 </label>
                                 <label htmlFor="fileInput">
-                                    <input type="file" name="file" id="fileInput" accept=".png, .jpg, .jpeg" onChange={this.handleChange} />
+                                    <input type="file" name="file" id="fileInput" defualtValue={this.props.data.image} accept=".png, .jpg, .jpeg" onChange={this.handleChange} />
                                 </label>
                                 <div className="previewImage">
                                     <p>Image preview</p>
@@ -52,7 +87,7 @@ class EditPostspage extends Component {
                                 <img src={trashIcon} width="20px" height="20px" alt="" />
                                 <button type="submit" id="delete_post" value="Delete" onClick={this.handleSubmit}>Ta bort inlägg</button>
                                 <button type="submit" id="new_post" value="Post" name={userState.userId} onClick={this.handleSubmit}>
-                                    Posta inlägg
+                                    Uppdatera inlägg
                                     {this.state.redirect && <Redirect to="/" />}
                                 </button>
                             </form>
@@ -113,7 +148,7 @@ class EditPostspage extends Component {
             if (file) {
                 formData.append('file', this.state.file)
             }
-            // Make request
+            // Make request            
             fetch("http://localhost:3001/api/post/new", {
                 method: "POST",
                 body: formData

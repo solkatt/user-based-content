@@ -1,82 +1,140 @@
-import React, { Component } from 'react'
-import './YourPostspage.css'
-import Post from '../RenderPost/RenderPost'
-import { Redirect } from 'react-router-dom'
+import React, { Component } from "react";
+import "./YourPostspage.css";
+import Post from "../RenderPost/RenderPost";
+import { Redirect } from "react-router-dom";
+import EditPostspage from "../EditPostspage/EditPostspage";
 
 class YourPostspage extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            isLoading: true,
-            postsJSON: [],
-            postsElements: [],
-            userId: this.props.user.userId,
-            backToStartpage: false
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      postsJSON: [],
+      postsElements: [],
+      userId: this.props.user.userId,
+      backToStartpage: false,
+      editStatus: false,
+      postData: { },
+    };
 
-        this.editPage = this.editPage.bind(this)
-    }
+    this.editPage = this.editPage.bind(this);
+  }
 
-    async fetchPosts() {
-        await fetch(`http://localhost:3001/api/post/${this.props.user.userId}`, {
-            method: "GET"
-        })
-            .then(response => response.json())
-            .then((json) => {
-                this.setState({
-                    isLoading: false,
-                    postsJSON: json.allUserPosts,
-                    postsElements: this.renderPosts(json.allUserPosts)
-                })
-            }).catch(error => console.log(error))
+  async fetchPosts() {
+    await fetch(`http://localhost:3001/api/post/${this.props.user.userId}`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        this.setState({
+          isLoading: false,
+          postsJSON: json.allUserPosts,
+          postsElements: this.renderPosts(json.allUserPosts),
+        });
+      })
+      .catch((error) => console.log(error));
+  }
 
-    }
+  editPage(post) {
+
+    console.log('POST SOM KOMMER IN', post)
+    this.setState({
+        postData: post
+    })
+    
+
+    this.setState({
+        editStatus: true,
+    })
+
+    console.log('POSTDATA', this.state.postData)
+
+    return <h1>HEEEEEEEJ</h1>
+    // return  <Redirect  to="/edit" />
+    // BYTA TILL /EDITSIDAN
+    // SKICKA MED POST OCH AUTOFYLL
+    // ISTÄLLET FÖR SKAPA, UPPDATERA BEFINTLIG POST
+
+    
+    
+  }
+  /**
+   * Create post elements from fetched data
+   */
+  renderPosts = (posts) => {
+    const allPosts = posts.map((post) => {
+      return (
+        <div>
+          <Post key={post._id} data={post} />
+          <button type="button" onClick={() => this.editPage(post)}>
+            Edit Post
+          </button>
+          <button type="button" onClick={() => <Redirect to="/edit" />}>
+            Redirect
+          </button>
+        </div>
+      );
+    });
+    return allPosts;
+  };
+
+  /**
+   * Fetch posts when component mounts, will trigger rerender
+   */
+  componentDidMount() {
+    this.fetchPosts();
+  }
+
+  render() {
+    const { isLoading, backToStartpage, postsElements, userId, postData } = this.state;
 
 
-    editPage(post) {
-        alert(post)
+if(this.state.editStatus) {
 
-        // BYTA TILL /EDITSIDAN
-        //SKICKA MED POST OCH AUTOFYLL
-        // ISTÄLLET FÖR SKAPA, UPPDATERA BEFINTLIG POST
-        // console.log(post)
-    }
-    /**
-     * Create post elements from fetched data
-     */
-    renderPosts = (posts) => {
-        const allPosts = posts.map(post => {
-             return (  
-                 <div>
-             <Post key={post._id} data={post} />
-             <button type="button" onClick={() => this.editPage(post) && <Redirect to="/edit"></Redirect>}>Edit Page</button>
-             </div>
-             
-             ) })
-        return allPosts
-    }
 
-    /**
-     * Fetch posts when component mounts, will trigger rerender
-     */
-    componentDidMount() {
-        this.fetchPosts()
-    }
 
-    render() {
-        const { isLoading, backToStartpage, postsElements, userId } = this.state
 
-        return (
-            isLoading && !backToStartpage ? <p>Loading...</p>
-                : <div className="userPostsContainer">
-                    {!isLoading && backToStartpage && <><p>Loading...</p><Redirect to="/" /></>}
-                    <button type="button" onClick={() => this.setState({ backToStartpage: true })}>Tillbaka till startsidan</button>
-                    <p>Hello {userId}</p>
-                    {postsElements}
-                </div>
+    return (
+        <>
+    <EditPostspage data={postData} />
 
-        )
-    }
+
+
+
+    {/* <Redirect to='/edit'  /> */}
+    {/* <Redirect to={{
+        pathname: '/edit',
+        state: { post: this.postData }
+    }} */}
+
+    </>
+    )
 }
 
-export default YourPostspage
+
+    return isLoading && !backToStartpage ? (
+      <p>Loading...</p>
+    ) : (
+      <div className="userPostsContainer">
+        {!isLoading && backToStartpage && (
+          <>
+            <p>Loading...</p>
+            <Redirect to="/" />
+          </>
+        )}
+        <button
+          type="button"
+          onClick={() => this.setState({ backToStartpage: true })}
+        >
+          Tillbaka till startsidan
+        </button>
+        <p>Hello {userId}</p>
+        {postsElements}
+      </div>
+    );
+  }
+}
+
+export default YourPostspage;
+
+
