@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const mongoose = require("mongoose")
 
 // Remove post from database
 exports.removePost = async (req, res, db) => {

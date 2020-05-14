@@ -49,15 +49,10 @@ class Postpage extends Component {
                                     <input type="file" name="file" id="fileInput" accept=".png, .jpg, .jpeg" onChange={this.handleChange} />
                                 </label>
                                 <div className="previewImage">
-                                    <p>Image preview</p>
+                                    <p>Uppladdad bild:</p>
                                     {this.state.fileURL !== "" && this.state.fileURL !== null && this.state.fileURL !== undefined ?
                                         <img src={this.state.fileURL} alt="" /> : null}
-                                    <p>Image from DB (search param is original filename)</p>
-                                    {this.state.fileName !== "" && this.state.fileName !== null && this.state.fileName !== undefined ?
-                                        <img src={`http://localhost:3001/api/post/image/${this.state.fileName}`} alt="" /> : null}
                                 </div>
-                                <img src={trashIcon} width="20px" height="20px" alt="" />
-                                <button type="submit" id="delete_post" value="Delete" onClick={this.handleSubmit}>Ta bort inlägg</button>
                                 <button type="submit" id="new_post" value="Post" name={userState.userId} onClick={this.handleSubmit}>
                                     Posta inlägg
                                     {this.state.redirect && <Redirect to="/" />}

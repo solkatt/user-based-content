@@ -43,11 +43,12 @@ router.get('/data', (req, res, next) => {
 					success: false,
 					message: 'Error: Invalid',
 				})
-			} else {
+			} else if (sessions[0] !== undefined) {
 				return res.send(
 					{success: true,
 					userId: sessions[0].userId})
-			}
+			} else { return res.status(500).send({ success: false, message: 'Unknown error' }) }
+
 		}
 	)
 })

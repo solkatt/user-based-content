@@ -34,7 +34,7 @@ class Post extends React.Component {
             {
               Object.keys(this.props.data).map((key) => {
                 if (key === 'image') {
-                  return <div><img
+                  return <div key={this.props.data[key].filename}><img
                     className={`_${key} postImg`}
                     key={`_${key}`}
                     src={`http://localhost:3001/api/post/image/${this.props.data[key].filename}`} /></div>
