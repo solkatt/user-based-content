@@ -6,21 +6,15 @@ const router = express.Router()
 
 router.use(express.json())
 
-
 router.get('/', (req, res, next) => {
-   
-    console.log('YJEEA USER')
-    res.send('hej')
-		
-	
+	console.log('YJEEA USER')
+	res.send('hej')
 })
 
-
-
-
+// RETURNS USER ID
 router.get('/data', (req, res, next) => {
-    // Get the token
-    
+	// Get the token
+
 	const { query } = req
 	const { token } = query
 
@@ -44,33 +38,30 @@ router.get('/data', (req, res, next) => {
 					message: 'Error: Invalid',
 				})
 			} else if (sessions[0] !== undefined) {
-				return res.send(
-					{success: true,
-					userId: sessions[0].userId})
-			} else { return res.status(500).send({ success: false, message: 'Unknown error' }) }
-
+				return res.send({ success: true, userId: sessions[0].userId })
+			} else {
+				return res
+					.status(500)
+					.send({ success: false, message: 'Unknown error' })
+			}
 		}
 	)
 })
 
-router.get('/logout', (req, res, next) => {
+// RETURNS USER ID
+router.get('/user', (req, res, next) => {
 	// Get the token
+
 	const { query } = req
-	const { token } = query
+	const { userId } = query
 
 	//Verify Token is ine of a kind and not deleted
-	UserSession.findOneAndUpdate(
+	User.find(
 		{
-			_id: token,
+			_id: userId,
 			isDeleted: false,
 		},
-		{
-			$set: {
-				isDeleted: true,
-			},
-		},
-		null,
-		(err, sessions) => {
+		(err, users) => {
 			if (err) {
 				return res.send({
 					success: false,
@@ -78,12 +69,56 @@ router.get('/logout', (req, res, next) => {
 				})
 			}
 
-			return res.send({
-				success: true,
-				message: 'Good',
-			})
+			if (users.length == null) {
+				return res.send({
+					success: false,
+					message: 'Error: Invalid',
+				})
+			} else if (users[0] !== undefined) {
+				return res.send({
+					success: true,
+					username: users[0].username,
+				})
+			} else {
+				return res
+					.status(500)
+					.send({ success: false, message: 'Unknown error' })
+			}
 		}
 	)
 })
+
+// router.get('/logout', (req, res, next) => {
+// 	// Get the token
+// 	const { query } = req
+// 	const { token } = query
+
+// 	//Verify Token is ine of a kind and not deleted
+// 	UserSession.findOneAndUpdate(
+// 		{
+// 			_id: token,
+// 			isDeleted: false,
+// 		},
+// 		{
+// 			$set: {
+// 				isDeleted: true,
+// 			},
+// 		},
+// 		null,
+// 		(err, sessions) => {
+// 			if (err) {
+// 				return res.send({
+// 					success: false,
+// 					message: 'Error: Server Error',
+// 				})
+// 			}
+
+// 			return res.send({
+// 				success: true,
+// 				message: 'Good',
+// 			})
+// 		}
+// 	)
+// })
 
 module.exports = router

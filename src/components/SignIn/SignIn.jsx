@@ -6,13 +6,12 @@ import {
 	removeFromStorage,
 } from '../../utils/storage'
 import './SignIn.css'
+import { UserConsumer } from '../../contexts/UserContext'
 
 // ICONS
 import { FaTimesCircle } from 'react-icons/fa'
 
 //
-
-
 
 export default class SignIn extends Component {
 	constructor(props) {
@@ -24,7 +23,7 @@ export default class SignIn extends Component {
 			signInUsername: '',
 			signInPassword: '',
 			createPost: false,
-			userPosts: false
+			userPosts: false,
 		}
 
 		this.onChangeSignInUsername = this.onChangeSignInUsername.bind(this)
@@ -70,10 +69,6 @@ export default class SignIn extends Component {
 		})
 	}
 
-
-	
-
-
 	onSignIn() {
 		const { signInUsername, signInPassword } = this.state
 
@@ -112,8 +107,6 @@ export default class SignIn extends Component {
 					})
 					// set Sign In Popup Message not hidden
 					// this.signInErrorMsg(this.state.signInError)
-
-
 				}
 			})
 	}
@@ -165,15 +158,13 @@ export default class SignIn extends Component {
 		popUp.classList.remove('hidden')
 	}
 
-
-
 	render() {
 		const {
 			isLoading,
 			token,
 			signInError,
 			signInUsername,
-			signInPassword
+			signInPassword,
 		} = this.state
 
 		if (isLoading) {
@@ -186,71 +177,99 @@ export default class SignIn extends Component {
 
 		if (!token) {
 			return (
-				<>
+				<UserConsumer>
+					{(userState) => (
+						<>
+							{{ signInError } ? (
+								<div className='errorMsg'>
+									<p>{signInError}</p>
+								</div>
+							) : null}
 
-					{{ signInError } ? <div className="errorMsg"><p>{signInError}</p></div> : null}
-
-					<div className='profileContainer'>
-						<button type='button' onClick={this.openSignIn}>
-							Sign In
-						</button>
-						<button type='button' onClick={this.openSignUp}>
-							Sign Up
-						</button>
-					</div>
+							<div className='profileContainer'>
+								<button type='button' onClick={this.openSignIn}>
+									Sign In
+								</button>
+								<button type='button' onClick={this.openSignUp}>
+									Sign Up
+								</button>
+							</div>
 
 							{/* {{signInError} ? this.signInErrorMsg('äggFlärp') : null} */}
 
-
-					<div className='sign-in-container hidden'>
-						<div className='sign-in-box'>
-
-							<div>
-								<p>Sign In</p>
-								<FaTimesCircle
-									className='close-icon'
-									onClick={this.closeSignIn}
-								/>
+							<div className='sign-in-container hidden'>
+								<div className='sign-in-box'>
+									<div>
+										<p>Sign In</p>
+										<FaTimesCircle
+											className='close-icon'
+											onClick={this.closeSignIn}
+										/>
+									</div>
+									<input
+										type='text'
+										placeholder='Username'
+										defaultValue={signInUsername}
+										onChange={this.onChangeSignInUsername}
+									/>
+									<br />
+									<input
+										type='password'
+										placeholder='Password'
+										defaultValue={signInPassword}
+										onChange={this.onChangeSignInPassword}
+									/>
+									<br />
+									<button
+										onClick={() => {
+											this.onSignIn()
+										}}
+									>
+										Sign In
+									</button>
+								</div>
+								<br />
+								<br />
+								<br />
 							</div>
-							<input
-								type='text'
-								placeholder='Username'
-								defaultValue={signInUsername}
-								onChange={this.onChangeSignInUsername}
-							/>
-							<br />
-							<input
-								type='password'
-								placeholder='Password'
-								defaultValue={signInPassword}
-								onChange={this.onChangeSignInPassword}
-							/>
-							<br />
-							<button onClick={this.onSignIn}>Sign In</button>
-						</div>
-						<br />
-						<br />
-						<br />
-					</div>
-				</>
+						</>
+					)}
+				</UserConsumer>
 			)
 		}
 
 		return (
-			<div className='profileContainer'>
-				<h3>Hej {signInUsername}! </h3>
-				<button type='button' onClick={() => { this.setState({ userPosts: true }); console.log(this.state.userPosts, "click") }}>
-					Your Posts
-					{this.state.userPosts && <Redirect to="/post" />}
-				</button>
-				<button type='button' onClick={() => { this.setState({ createPost: true }); console.log(this.state.createPost, "click") }}>
-					Create New Post
-					{this.state.createPost && <Redirect to="/new" />}
-				</button>
-				<button type='button' onClick={this.logout}>
-					Log Out
-				</button>
-			</div>
+			<UserConsumer>
+				{(userState) => (
+					<div className='profileContainer'>
+						{userState.setUsername()}
+						<h3>Hej {userState.username}! </h3>
+						<button
+							type='button'
+							onClick={() => {
+								this.setState({ userPosts: true })
+								console.log(this.state.userPosts, 'click')
+							}}
+						>
+							Your Posts
+							{this.state.userPosts && <Redirect to='/post' />}
+						</button>
+						<button
+							type='button'
+							onClick={() => {
+								this.setState({ createPost: true })
+								console.log(this.state.createPost, 'click')
+							}}
+						>
+							Create New Post
+							{this.state.createPost && <Redirect to='/new' />}
+						</button>
+						<button type='button' onClick={this.logout}>
+							Log Out
+						</button>
+					</div>
+				)}
+			</UserConsumer>
 		)
 	}
 }
