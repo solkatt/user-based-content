@@ -46,7 +46,7 @@ db.once('open', function () {
     // Create storage collection
     gfs = Grid(db.db, mongoose.mongo)
     gfs.collection('images')
-    require('./routes/postRoutes')(app, gfs, upload)
+    require('./routes/postRoutes')(app, gfs, upload, db)
     console.log('Connected to db with Mongoose!')
 })
 

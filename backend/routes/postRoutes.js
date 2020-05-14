@@ -1,9 +1,11 @@
 const cors = require("cors")
 
-module.exports = (app, gfs, upload) => {
+module.exports = (app, gfs, upload, db) => {
     const controller = require('../controller/postController')
 
     app.use(cors())
+
+    app.delete("/api/post/remove/:id", (req, res) => controller.removePost(req, res, db))
 
     // Create new post
     app.post("/api/post/new", upload.single('file'), controller.createPost)

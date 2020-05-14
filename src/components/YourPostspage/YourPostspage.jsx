@@ -14,15 +14,21 @@ class YourPostspage extends Component {
       userId: this.props.user.userId,
       backToStartpage: false,
       editStatus: false,
-      postData: { },
+      postData: {},
     };
 
     this.editPage = this.editPage.bind(this);
+    this.abortController = new AbortController();
+  }
+
+  componentWillUnmount() {
+    this.abortController.abort()
   }
 
   async fetchPosts() {
     await fetch(`http://localhost:3001/api/post/${this.props.user.userId}`, {
       method: "GET",
+      signal: this.abortController.signal
     })
       .then((response) => response.json())
       .then((json) => {
@@ -64,8 +70,8 @@ class YourPostspage extends Component {
   renderPosts = (posts) => {
     const allPosts = posts.map((post) => {
       return (
-        <div>
-          <Post key={post._id} data={post} />
+        <div key={post._id}>
+          <Post data={post} />
           <button type="button" onClick={() => this.editPage(post)}>
             Edit Post
           </button>
@@ -101,8 +107,8 @@ if(this.state.editStatus) {
 
 
 
-    {/* <Redirect to='/edit'  /> */}
-    {/* <Redirect to={{
+          {/* <Redirect to='/edit'  /> */}
+          {/* <Redirect to={{
         pathname: '/edit',
         state: { post: this.postData }
     }} */}
