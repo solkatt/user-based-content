@@ -4,20 +4,42 @@ const mongoose = require("mongoose")
 // Remove post from database
 exports.removePost = async (req, res, db) => {
     try {
-        const imageRemoved = await Post.findOne({ '_id': req.params.id })
+        const imageRemoved = await Post.findOne({
+            '_id': req.params.id
+        })
         if (imageRemoved.image._id !== undefined && imageRemoved.image._id !== null) {
-            const removeFile = await db.collection('images.files').deleteOne({ '_id': mongoose.Types.ObjectId(imageRemoved.image._id) })
-            const removeChunks = await db.collection('images.chunks').deleteOne({ 'files_id': mongoose.Types.ObjectId(imageRemoved.image._id) })
+            const removeFile = await db.collection('images.files').deleteOne({
+                '_id': mongoose.Types.ObjectId(imageRemoved.image._id)
+            })
+            const removeChunks = await db.collection('images.chunks').deleteOne({
+                'files_id': mongoose.Types.ObjectId(imageRemoved.image._id)
+            })
             if (removeChunks.deletedCount === 0 && removeFile.deletedCount === 0) {
                 console.log('No image was found');
-                return res.status(500).send({ success: true, message: "No image was found" })
-            } else { console.log("Successfully removed image") }
+                return res.status(500).send({
+                    success: true,
+                    message: "No image was found"
+                })
+            } else {
+                console.log("Successfully removed image")
+            }
         }
-        const removed = await Post.deleteOne({ '_id': req.params.id }, (error, result) => {
+        const removed = await Post.deleteOne({
+            '_id': req.params.id
+        }, (error, result) => {
             if (error || result.n === 0) {
                 console.log(error)
-                return { success: false, message: "Error while deleting post" }
-            } else { return { result: result, success: true, message: "Successfully deleted post" } }
+                return {
+                    success: false,
+                    message: "Error while deleting post"
+                }
+            } else {
+                return {
+                    result: result,
+                    success: true,
+                    message: "Successfully deleted post"
+                }
+            }
         })
         res.send(removed)
     } catch (error) {
@@ -30,7 +52,7 @@ exports.removePost = async (req, res, db) => {
 exports.updatePost = async (req, res) => {
 
     console.log('REQ PARAMS', req.params.id)
-    console.log('REQ BODYUSER:', req.body.user)
+    console.log('REQ:', req.body)
     try {
         let post = new Post({
             user: req.body.user,
@@ -44,19 +66,32 @@ exports.updatePost = async (req, res) => {
                 filename: req.file.originalname
             }
         }
-     //UPDATE POST
-     Post.findByIdAndUpdate(`${req.params.id}`, post)
-     res.status(200).send({ success: true, message: "Successfully updated post" })
+        //UPDATE POST
+        Post.findByIdAndUpdate(req.params.id, {
+                $set: req.body
+            }, function (err, result) {
+                if (err) {
+                    console.log(err)
+                }
+                console.log('RESULT', result)
+                res.send()
+            }
+
+    )
+    res.status(200).send({
+        success: true,
+        message: "Successfully updated post"
+    })
 
 
 
-        // // Save post
-        // const saved = await post.save()
-        // res.status(200).send({ success: true, message: "Successfully saved post" })
-    } catch (error) {
-        console.log(error)
-        res.end()
-    }
+    // // Save post
+    // const saved = await post.save()
+    // res.status(200).send({ success: true, message: "Successfully saved post" })
+} catch (error) {
+    console.log(error)
+    res.end()
+}
 
 }
 
@@ -77,7 +112,10 @@ exports.createPost = async (req, res) => {
         }
         // Save post
         const saved = await post.save()
-        res.status(200).send({ success: true, message: "Successfully saved post" })
+        res.status(200).send({
+            success: true,
+            message: "Successfully saved post"
+        })
     } catch (error) {
         console.log(error)
         res.end()
@@ -86,7 +124,9 @@ exports.createPost = async (req, res) => {
 
 // Get image by filename and stream to browser
 exports.getImageByFilename = (req, res, gfs) => {
-    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    gfs.files.findOne({
+        filename: req.params.filename
+    }, (err, file) => {
         // Check if file
         if (!file || file.length === 0) {
             return res.status(404).json({
@@ -111,8 +151,12 @@ exports.getAllPosts = async (req, res) => {
     try {
         const posts = await Post.find({}, (error, userPosts) => {
             return userPosts
-        }).sort({ '_id': 'desc' })
-        res.status(200).send({ allUserPosts: posts })
+        }).sort({
+            '_id': 'desc'
+        })
+        res.status(200).send({
+            allUserPosts: posts
+        })
     } catch (error) {
         console.log(error)
     }
@@ -120,16 +164,26 @@ exports.getAllPosts = async (req, res) => {
 
 exports.getUserPosts = async (req, res) => {
     try {
-        const user = await Post.find({ user: req.params.id }, (error, userPosts) => {
+        const user = await Post.find({
+            user: req.params.id
+        }, (error, userPosts) => {
             if (userPosts.length < 0) {
                 console.log("no posts ")
-                return res.status(404).send({ success: false, message: "No posts were found" })
+                return res.status(404).send({
+                    success: false,
+                    message: "No posts were found"
+                })
             }
             return userPosts
         })
-        res.status(200).send({ allUserPosts: user })
+        res.status(200).send({
+            allUserPosts: user
+        })
     } catch (error) {
         console.log(error)
-        res.status(500).send({ success: false, message: "Failed to fetch all posts" })
+        res.status(500).send({
+            success: false,
+            message: "Failed to fetch all posts"
+        })
     }
 }

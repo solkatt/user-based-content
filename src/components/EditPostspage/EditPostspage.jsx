@@ -132,6 +132,10 @@ class EditPostspage extends Component {
 			default:
 				break
 		}
+
+		console.log(this.state.title)
+		console.log(this.state.text)
+
 	}
 
 	/**
@@ -155,10 +159,13 @@ class EditPostspage extends Component {
 					}
 				})
 			}
+			console.log('THIS STATE TITLE:', this.state.title)
 			// Get input data
 			let formData = new FormData(this.formRef.current)
 			formData.delete('file')
 			formData.append('user', user)
+			console.log('FORMDATA', formData.title)
+
 			// Add file to request if it exists
 			if (file) {
 				formData.append('file', this.state.file)
@@ -168,8 +175,19 @@ class EditPostspage extends Component {
 
 			// UPDATE
 			fetch(`http://localhost:3001/api/post/update/${this.props.data._id}`, {
+				
 				method: 'PUT',
-				body: formData,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					title: this.state.title,
+					text: this.state.text,
+					file: this.state.file,
+					fileName: '',
+					fileURL: '',
+					redirect: false,
+				}),
 			})
 				.then((res) => {
 					// Set state with fileName and then redirect
@@ -177,7 +195,6 @@ class EditPostspage extends Component {
 						fileName: this.state.file.name,
 						redirect: true,
 					})
-					console.log(formData)
 					return
 				})
 				.catch((error) => console.log(error))
