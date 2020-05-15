@@ -54,7 +54,6 @@ router.get('/user', (req, res, next) => {
 
 	const { query } = req
 	const { userId } = query
-
 	//Verify Token is ine of a kind and not deleted
 	User.find(
 		{
@@ -120,5 +119,22 @@ router.get('/user', (req, res, next) => {
 // 		}
 // 	)
 // })
+
+/**
+ * Get username by requested id
+ */
+router.get('/:id', (req, res, next) => {
+	User.findOne(
+		{
+			_id: req.params.id,
+			isDeleted: false,
+		},
+		(error, users) => {
+			if (error) {
+				res.status(500).send(error)
+			} else { res.send({ username: users.username }) }
+		}
+	)
+})
 
 module.exports = router

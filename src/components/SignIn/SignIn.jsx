@@ -108,7 +108,7 @@ export default class SignIn extends Component {
 					// set Sign In Popup Message not hidden
 					// this.signInErrorMsg(this.state.signInError)
 				}
-			})
+			}).then(res => window.location.reload())
 	}
 
 	logout() {
@@ -135,7 +135,7 @@ export default class SignIn extends Component {
 							isLoading: false,
 						})
 					}
-				})
+				}).then(res => window.location.reload())
 		} else {
 			this.setState({
 				isLoading: false,

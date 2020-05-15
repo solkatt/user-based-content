@@ -70,23 +70,11 @@ class EditPostspage extends Component {
 									/>
 								</label>
 								<div className='previewImage'>
-									<p>Image preview</p>
+									<p>Uppladdad fil:</p>
 									{this.state.fileURL !== '' &&
 									this.state.fileURL !== null &&
 									this.state.fileURL !== undefined ? (
 										<img src={this.state.fileURL} alt='' />
-									) : null}
-									<p>
-										Image from DB (search param is original
-										filename)
-									</p>
-									{this.state.fileName !== '' &&
-									this.state.fileName !== null &&
-									this.state.fileName !== undefined ? (
-										<img
-											src={`http://localhost:3001/api/post/image/${this.state.fileName}`}
-											alt=''
-										/>
 									) : null}
 								</div>
 								<img
