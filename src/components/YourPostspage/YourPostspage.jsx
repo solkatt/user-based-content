@@ -73,11 +73,8 @@ class YourPostspage extends Component {
       return (
         <div key={post._id}>
           <Post data={post} />
-          <button type="button" onClick={() => this.editPage(post)}>
+          <button className="editPostButton" type="button" onClick={() => this.editPage(post)}>
             Edit Post
-          </button>
-          <button type="button" onClick={() => <Redirect to="/edit" />}>
-            Redirect
           </button>
         </div>
       );
@@ -115,7 +112,6 @@ class YourPostspage extends Component {
     ) : (
         <div className="userPostsContainer">
           <SignIn backButton createButton />
-          <p>Hello {userId}</p>
           {postsElements}
         </div>
       );

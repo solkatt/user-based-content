@@ -7,7 +7,7 @@ import {
 } from '../../utils/storage'
 import './SignIn.css'
 import { UserConsumer } from '../../contexts/UserContext'
-
+import ServerMsg from '../ServerMsg/ServersMsg'
 // ICONS
 import { FaTimesCircle } from 'react-icons/fa'
 
@@ -113,7 +113,10 @@ export default class SignIn extends Component {
 					// set Sign In Popup Message not hidden
 					// this.signInErrorMsg(this.state.signInError)
 				}
-			}).then(res => window.location.reload())
+			})
+			.catch(
+				
+			)
 	}
 
 	logout() {
@@ -186,11 +189,16 @@ export default class SignIn extends Component {
 				<UserConsumer>
 					{(userState) => (
 						<>
-							{{ signInError } ? (
+							{/* {{ signInError } ? (
 								<div className='errorMsg'>
-									<p>{signInError}</p>
+									
+									<ServerMsg message={signInError}/>
 								</div>
-							) : null}
+							) : null} */}
+
+								<div className={`errMsg ${signInError ? "" : "hidden"}`}>
+									<ServerMsg message={signInError} />
+								</div>
 
 							<div className='profileContainer'>
 								<button type='button' onClick={this.openSignIn}>
@@ -201,10 +209,10 @@ export default class SignIn extends Component {
 								</button>
 							</div>
 
-							{/* {{signInError} ? this.signInErrorMsg('äggFlärp') : null} */}
 
 							<div className='sign-in-container hidden'>
 								<div className='sign-in-box'>
+							{/* {{signInError} ? <p>{signInError}</p> : null} */}
 									<div>
 										<p>Redan medlem?</p>
 										<FaTimesCircle

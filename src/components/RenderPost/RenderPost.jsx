@@ -65,6 +65,7 @@ class Post extends React.Component {
                 } else { return null }
               })
             }
+            <div className="postInfoText">
             <h3>{this.props.data.title}</h3>
             <h6>{this.renderDate(this.props.data.createdAt)} av {this.state.username}</h6>
             {
@@ -74,7 +75,9 @@ class Post extends React.Component {
                 } else { return null }
               })
             }
-            {userState.userId === this.props.data.user && <button onClick={this.removePost}>Ta bort inlägg</button>}
+            {userState.userId === this.props.data.user && <button className="removePostButton" onClick={this.removePost}>Ta bort inlägg</button>}
+            </div>
+            
           </div>
         )}
       </UserConsumer>

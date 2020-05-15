@@ -1,9 +1,9 @@
-.post {
-    background: #C6DABF;
+/* .post {
+    background: red;
     display: flex;
     padding: 0.4rem;
     margin-bottom: 0.5rem;
-}
+} */
 
 .postImg {
     width: 10rem;
@@ -11,20 +11,60 @@
 }
 
 .postInfo {
+    display: flex;
     margin: 0.4rem;
+    padding: 0.5rem;
+    background: #C6DABF;
+    max-width: 60rem;
+    height: auto;
 }
 
-.postInfo h3 {
-    margin: 0;
+.postInfoText {
+    width: auto;
+}
+
+.postInfoText h3 {
+    margin-left: 0.3rem;
+}
+
+.postInfoText h6 {
+    margin-left: 0.3rem;
     padding: 0;
 }
 
-.postInfo h6 {
-    margin: 0;
-    padding: 0;
-}
-
-.postInfo p {
+.postInfoText p {
     margin-top: 0.5rem;
+    margin-left: 0.3rem;
     padding: 0;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+/* Post ID */
+.__id {
+}
+/* User (post author) ID */
+._user {
+}
+
+/* Post title */
+._title {
+}
+
+/* Post body (text) */
+._text {
+    width: 100%;
+}
+
+._createdAt {
+}
+
+.removePostButton {
+    margin-left: 0.3rem;
+    margin-top: 0.3rem;
+    background: #F3E9D2;
+    color: #114B5F;
+    border-style: none;
+    cursor: pointer;
+    padding: 0.3rem;
 }

@@ -24,8 +24,6 @@ export class UserProvider extends Component {
 	}
 
 	componentDidMount() {
-		console.log('BAJS')
-
 		const obj = getFromStorage('storage-object')
 		if (obj && obj.token) {
 			const { token } = obj

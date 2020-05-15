@@ -1,25 +1,3 @@
-/* Post ID */
-.__id {
-    background-color: palevioletred;
-}
-/* User (post author) ID */
-._user {
-    background-color: paleturquoise;
-}
-
-/* Post title */
-._title {
-    background-color: palegreen;
-}
-
-/* Post body (text) */
-._text {
-    background-color: palegoldenrod;
-}
-
-._createdAt {
-    background-color: papayawhip;
-}
 
 /* All posts container */
 .userPostsContainer {
@@ -44,4 +22,12 @@
     width: 100%;
     object-fit: cover;
     height: 5rem;
+}
+
+.editPostButton {
+    background: rgb(255, 255, 255);
+    color: #114B5F;
+    border-style: none;
+    cursor: pointer;
+    padding: 0.3rem;
 }

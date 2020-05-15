@@ -132,7 +132,11 @@ router.get('/:id', (req, res, next) => {
 		(error, users) => {
 			if (error) {
 				res.status(500).send(error)
-			} else { res.send({ username: users.username }) }
+			} else if (users.username === null || users.username === undefined) {
+				res.status(500).send({ success: false, message: "No user found" })
+			} else {
+				res.send({ username: users.username })
+			}
 		}
 	)
 })

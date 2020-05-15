@@ -1,6 +1,7 @@
-.editPostContainer {
-    width: 100%;
+.editPostContainer, .editPostContainer * {
     margin: .5rem;
+    outline: none;
+    box-sizing: border-box;
 }
 
 .editPostContainer > form {
@@ -22,7 +23,30 @@
     margin: .5rem 0;
 
 }
+.editPostContainer button[type="submit"] {
+    align-self: center;
+    font-size: 1rem;
+    border: 0;
+    color: #F3E9D2;
+    font-weight: bold;
+    padding: 1rem;
+    border-radius: .5rem;
+    width: fit-content;
+}
+
+.valid {
+    cursor: pointer;
+    background-color: rgb(17, 75, 95);
+}
+
+.invalid {
+    background-color: #C6DABF;
+}
+
 
 textarea {
+    max-height: 12rem;
+    overflow-y: scroll;
+    line-height: 1.5rem;
     resize: none;
 }

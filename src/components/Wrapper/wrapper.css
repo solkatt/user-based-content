@@ -6,4 +6,5 @@
     background: #F3E9D2;
     color: #114B5F;
     height: 100vh;
+    overflow-y: scroll;
 }

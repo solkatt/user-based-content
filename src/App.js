@@ -11,7 +11,6 @@ import UserPostspage from "./components/YourPostspage/YourPostspage";
 import Editpage from "./components/EditPostspage/EditPostspage";
 
 
-console.log('hello from app.js')
 function App() {
   return (
     <Router>

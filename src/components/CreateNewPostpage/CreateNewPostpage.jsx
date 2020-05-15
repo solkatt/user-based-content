@@ -34,17 +34,12 @@ class Postpage extends Component {
             <UserConsumer>
                 {(userState) => (
                     <>
-                        <SignIn backButton yourPostsButton />
                         <div className="editPostContainer">
-                            <h1>Skapa post</h1>
+                            <SignIn backButton yourPostsButton />
+                            <h1>Skapa inlägg</h1>
                             <form onSubmit={this.handleSubmit} ref={this.formRef}>
-                                <label htmlFor="title">
-                                    Titel:
                                 <input type="text" name="title" id="title" placeholder="Skriv din titel här..." onChange={this.handleChange} />
-                                </label>
-                                <label htmlFor="text">
-                                    <textarea value={this.state.postText} name="text" id="text" cols="30" rows="10" placeholder="Skriv något kul här..." onChange={this.handleChange} />
-                                </label>
+                                <textarea value={this.state.postText} name="text" id="text" maxLength="200" cols="30" rows="10" placeholder="Skriv något kul här..." onChange={this.handleChange} />
                                 <label htmlFor="fileInput">
                                     <input type="file" name="file" id="fileInput" accept=".png, .jpg, .jpeg" onChange={this.handleChange} />
                                 </label>
@@ -53,7 +48,7 @@ class Postpage extends Component {
                                     {this.state.fileURL !== "" && this.state.fileURL !== null && this.state.fileURL !== undefined ?
                                         <img src={this.state.fileURL} alt="" /> : null}
                                 </div>
-                                <button type="submit" id="new_post" value="Post" name={userState.userId} onClick={this.handleSubmit}>
+                                <button className={this.state.text === "" || this.state.title === "" ? 'invalid' : 'valid'} type="submit" id="new_post" value="Post" name={userState.userId} onClick={this.handleSubmit}>
                                     Posta inlägg
                                     {this.state.redirect && <Redirect to="/" />}
                                 </button>
@@ -98,14 +93,15 @@ class Postpage extends Component {
         if (event.target.value === 'Post') {
             const { file, title, text } = this.state
             const inputs = { file, title, text }
-            const found = Object.keys(inputs).filter(key => inputs[key] === "")
-            if (found.length !== 0) {
+            const found = Object.keys(inputs).filter(key => { return inputs[key] === "" && key !== 'file'})
+            if (found.length >= 1) {
+                alert(`Du måste fylla i alla fält.`)
                 found.forEach(emptyInput => {
                     if (emptyInput !== 'file') {
                         console.log(`${emptyInput} is empty.`)
-                        return
                     }
                 })
+                return
             }
             // Get input data
             let formData = new FormData(this.formRef.current)
