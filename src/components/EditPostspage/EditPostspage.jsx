@@ -42,7 +42,7 @@ class EditPostspage extends Component {
 										type='text'
 										name='title'
 										id='title'
-										defaultvalue={this.props.data.title}
+										defaultValue={this.props.data.title}
 										placeholder='Skriv din titel här...'
 										onChange={this.handleChange}
 									/>
@@ -54,7 +54,7 @@ class EditPostspage extends Component {
 										id='text'
 										cols='30'
 										rows='10'
-										defaultvalue={this.props.data.text}
+										defaultValue={this.props.data.text}
 										placeholder='Skriv något kul här...'
 										onChange={this.handleChange}
 									/>
@@ -64,7 +64,7 @@ class EditPostspage extends Component {
 										type='file'
 										name='file'
 										id='fileInput'
-										defualtvalue={this.props.data.image}
+										// defualtvalue={this.props.data.image}
 										accept='.png, .jpg, .jpeg'
 										onChange={this.handleChange}
 									/>
@@ -163,9 +163,12 @@ class EditPostspage extends Component {
 			if (file) {
 				formData.append('file', this.state.file)
 			}
-			// Make request
-			fetch('http://localhost:3001/api/post/new', {
-				method: 'POST',
+
+
+
+			// UPDATE
+			fetch(`http://localhost:3001/api/post/update/${this.props.data._id}`, {
+				method: 'PUT',
 				body: formData,
 			})
 				.then((res) => {
@@ -174,6 +177,7 @@ class EditPostspage extends Component {
 						fileName: this.state.file.name,
 						redirect: true,
 					})
+					console.log(formData)
 					return
 				})
 				.catch((error) => console.log(error))
@@ -185,5 +189,16 @@ class EditPostspage extends Component {
 		}
 	}
 }
+
+
+
+// removePost() {
+//     fetch(`http://localhost:3001/api/post/remove/${this.props.data._id}`, {
+//       method: "DELETE",
+//       signal: this.abortController.signal
+//     }).then(res => res.json())
+//       .then((json) => this.setState({ isDeleted: true }))
+//       .catch(error => console.log(error))
+//   }
 
 export default EditPostspage

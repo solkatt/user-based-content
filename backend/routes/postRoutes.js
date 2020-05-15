@@ -18,4 +18,6 @@ module.exports = (app, gfs, upload, db) => {
 
     // Get a single image from filename
     app.get("/api/post/image/:filename", (req, res) => controller.getImageByFilename(req, res, gfs))
+
+    app.put('/api/post/update/:id', (req, res) => controller.updatePost(req, res) )
 }

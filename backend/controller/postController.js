@@ -26,6 +26,40 @@ exports.removePost = async (req, res, db) => {
     }
 }
 
+
+exports.updatePost = async (req, res) => {
+
+    console.log('REQ PARAMS', req.params.id)
+    console.log('REQ BODYUSER:', req.body.user)
+    try {
+        let post = new Post({
+            user: req.body.user,
+            title: req.body.title,
+            text: req.body.text
+        })
+        // If image was added
+        if (req.file) {
+            post.image = {
+                _id: req.file.id,
+                filename: req.file.originalname
+            }
+        }
+     //UPDATE POST
+     Post.findByIdAndUpdate(`${req.params.id}`, post)
+     res.status(200).send({ success: true, message: "Successfully updated post" })
+
+
+
+        // // Save post
+        // const saved = await post.save()
+        // res.status(200).send({ success: true, message: "Successfully saved post" })
+    } catch (error) {
+        console.log(error)
+        res.end()
+    }
+
+}
+
 // Create new post
 exports.createPost = async (req, res) => {
     try {
