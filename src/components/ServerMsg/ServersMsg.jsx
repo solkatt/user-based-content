@@ -19,7 +19,7 @@ export default class ServerMsg extends Component {
             <div className="serverMsg-container"> 
         <div className="serverMsg-box">
         <FaTimesCircle
-											className='close-icon'
+											className='closeServerMsg-icon'
 											onClick={this.closeServerMsg}
                                             />
             <FaKiwiBird className="kiwi"/>
