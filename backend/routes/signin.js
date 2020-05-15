@@ -214,8 +214,4 @@ router.get('/logout', (req, res, next) => {
 	)
 })
 
-router.get('/test', (req, res) => {
-	res.send('YEAH')
-})
-
 module.exports = router
