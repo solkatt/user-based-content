@@ -34,7 +34,7 @@ class Postpage extends Component {
             <UserConsumer>
                 {(userState) => (
                     <>
-                        <SignIn />
+                        <SignIn backButton yourPostsButton />
                         <div className="editPostContainer">
                             <h1>Skapa post</h1>
                             <form onSubmit={this.handleSubmit} ref={this.formRef}>

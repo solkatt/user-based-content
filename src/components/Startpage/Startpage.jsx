@@ -48,7 +48,7 @@ class Startpage extends Component {
 			<div className='startpageContainer'>
 				<div className='startpageHeader'>
 					<h1 className='startpageTitle'>Coop Forum!</h1>
-					<SignIn />
+					<SignIn yourPostsButton createButton logOutButton/>
 					<SignUp />
 				</div>
 				{isLoading ? <p>Loading...</p> : postsElements}

@@ -24,6 +24,7 @@ export default class SignIn extends Component {
 			signInPassword: '',
 			createPost: false,
 			userPosts: false,
+			backToStartpage: false
 		}
 
 		this.onChangeSignInUsername = this.onChangeSignInUsername.bind(this)
@@ -68,6 +69,10 @@ export default class SignIn extends Component {
 			signInPassword: event.target.value,
 		})
 	}
+
+
+
+
 
 	onSignIn() {
 		const { signInUsername, signInPassword } = this.state
@@ -165,6 +170,7 @@ export default class SignIn extends Component {
 			signInError,
 			signInUsername,
 			signInPassword,
+			backToStartpage
 		} = this.state
 
 		if (isLoading) {
@@ -195,7 +201,7 @@ export default class SignIn extends Component {
 								</button>
 							</div>
 
-							{/* {{signInError} ? this.signInErrorMsg('äggFlärp') : null} */}
+					{/* {{signInError} ? this.signInErrorMsg('äggFlärp') : null} */}
 
 							<div className='sign-in-container hidden'>
 								<div className='sign-in-box'>
@@ -244,30 +250,32 @@ export default class SignIn extends Component {
 					<div className='profileContainer'>
 						{userState.setUsername()}
 						<h3>Hej {userState.username}! </h3>
-						<button
-							type='button'
-							onClick={() => {
-								this.setState({ userPosts: true })
-								console.log(this.state.userPosts, 'click')
-							}}
-						>
-							Your Posts
-							{this.state.userPosts && <Redirect to='/post' />}
-						</button>
-						<button
-							type='button'
-							onClick={() => {
-								this.setState({ createPost: true })
-								console.log(this.state.createPost, 'click')
-							}}
-						>
-							Create New Post
-							{this.state.createPost && <Redirect to='/new' />}
-						</button>
-						<button type='button' onClick={this.logout}>
-							Log Out
-						</button>
+				{this.props.yourPostsButton &&
+					<button type='button' onClick={() => { this.setState({ userPosts: true }) }}>
+						Dina inlägg
+					{this.state.userPosts && <Redirect to="/post" />}
+					</button>}
+										{this.props.createButton &&
+					<button type='button' onClick={() => { this.setState({ createPost: true }) }}>
+						Skapa inlägg
+					{this.state.createPost && <Redirect to="/new" />}
+					</button>}
+				{this.props.logOutButton &&
+					<button type='button' onClick={this.logout}>
+						Logga ut
+					</button>}
 					</div>
+				{!isLoading && backToStartpage &&
+					<>
+						<p>Loading...</p>
+						<Redirect to="/" />
+					</>}
+				{this.props.backButton &&
+					<button
+						type="button"
+						onClick={() => this.setState({ backToStartpage: true })}>
+						Tillbaka till startsidan
+        			</button>}
 				)}
 			</UserConsumer>
 		)

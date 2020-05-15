@@ -3,6 +3,7 @@ import "./YourPostspage.css";
 import Post from "../RenderPost/RenderPost";
 import { Redirect } from "react-router-dom";
 import EditPostspage from "../EditPostspage/EditPostspage";
+import SignIn from '../SignIn/SignIn'
 
 class YourPostspage extends Component {
   constructor(props) {
@@ -45,12 +46,12 @@ class YourPostspage extends Component {
 
     console.log('POST SOM KOMMER IN', post)
     this.setState({
-        postData: post
+      postData: post
     })
-    
+
 
     this.setState({
-        editStatus: true,
+      editStatus: true,
     })
 
     console.log('POSTDATA', this.state.postData)
@@ -61,8 +62,8 @@ class YourPostspage extends Component {
     // SKICKA MED POST OCH AUTOFYLL
     // ISTÄLLET FÖR SKAPA, UPPDATERA BEFINTLIG POST
 
-    
-    
+
+
   }
   /**
    * Create post elements from fetched data
@@ -95,49 +96,29 @@ class YourPostspage extends Component {
     const { isLoading, backToStartpage, postsElements, userId, postData } = this.state;
 
 
-if(this.state.editStatus) {
-
-
-
-
-    return (
+    if (this.state.editStatus) {
+      return (
         <>
-    <EditPostspage data={postData} />
-
-
-
+          <EditPostspage data={postData} />
 
           {/* <Redirect to='/edit'  /> */}
           {/* <Redirect to={{
         pathname: '/edit',
         state: { post: this.postData }
     }} */}
-
-    </>
-    )
-}
-
+        </>
+      )
+    }
 
     return isLoading && !backToStartpage ? (
       <p>Loading...</p>
     ) : (
-      <div className="userPostsContainer">
-        {!isLoading && backToStartpage && (
-          <>
-            <p>Loading...</p>
-            <Redirect to="/" />
-          </>
-        )}
-        <button
-          type="button"
-          onClick={() => this.setState({ backToStartpage: true })}
-        >
-          Tillbaka till startsidan
-        </button>
-        <p>Hello {userId}</p>
-        {postsElements}
-      </div>
-    );
+        <div className="userPostsContainer">
+          <SignIn backButton createButton />
+          <p>Hello {userId}</p>
+          {postsElements}
+        </div>
+      );
   }
 }
 
