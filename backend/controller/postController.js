@@ -57,7 +57,7 @@ exports.updatePost = async (req, res) => {
         let post = new Post({
             user: req.body.user,
             title: req.body.title,
-            text: req.body.text
+            text: req.body.text,
         })
         // If image was added
         if (req.file) {
