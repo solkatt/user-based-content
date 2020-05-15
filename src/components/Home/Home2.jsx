@@ -230,58 +230,58 @@ export default class Home extends Component {
 				<div>
 					<div>
 						{{ signInError } ? <p>{signInError}</p> : null}
-						<p>Sign In</p>
+						<p>Redan medlem?</p>
 						<input
 							type='text'
-							placeholder='Username'
+							placeholder='Användarnamn'
 							defaultValue={signInUsername}
 							onChange={this.onChangeSignInUsername}
 						/>
 						<br />
 						<input
 							type='password'
-							placeholder='Password'
+							placeholder='Lösenord'
 							defaultValue={signInPassword}
 							onChange={this.onChangeSignInPassword}
 						/>
 						<br />
-						<button onClick={this.onSignIn}>Sign In</button>
+						<button onClick={this.onSignIn}>Logga in</button>
 					</div>
 					<br />
 					<br />
 					<br />
 					<div>
 						{signUpError ? <p>{signUpError}</p> : null}
-						<p>Sign Up</p>
+						<p>Registrera dig</p>
 						<input
 							type='text'
-							placeholder='First Name'
+							placeholder='Förnamn'
 							defaultValue={signUpFirstName}
 							onChange={this.onChangeSignUpFirstName}
 						/>{' '}
 						<br />
 						<input
 							type='text'
-							placeholder='Last Name'
+							placeholder='Efternamn'
 							defaultValue={signUpLastName}
 							onChange={this.onChangeSignUpLastName}
 						/>{' '}
 						<br />
 						<input
 							type='text'
-							placeholder='Username'
+							placeholder='Användarnamn'
 							defaultValue={signUpUsername}
 							onChange={this.onChangeSignUpUsername}
 						/>{' '}
 						<br />
 						<input
 							type='password'
-							placeholder='Password'
+							placeholder='Lösenord'
 							defaultValue={signUpPassword}
 							onChange={this.onChangeSignUpPassword}
 						/>{' '}
 						<br />
-						<button onClick={this.onSignUp}>Sign Up</button>
+						<button onClick={this.onSignUp}>Registrera dig</button>
 					</div>
 				</div>
 			)

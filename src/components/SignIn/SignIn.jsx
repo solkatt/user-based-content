@@ -194,10 +194,10 @@ export default class SignIn extends Component {
 
 							<div className='profileContainer'>
 								<button type='button' onClick={this.openSignIn}>
-									Sign In
+									Logga in
 								</button>
 								<button type='button' onClick={this.openSignUp}>
-									Sign Up
+									Registrera dig
 								</button>
 							</div>
 
@@ -206,7 +206,7 @@ export default class SignIn extends Component {
 							<div className='sign-in-container hidden'>
 								<div className='sign-in-box'>
 									<div>
-										<p>Sign In</p>
+										<p>Redan medlem?</p>
 										<FaTimesCircle
 											className='close-icon'
 											onClick={this.closeSignIn}
@@ -214,14 +214,14 @@ export default class SignIn extends Component {
 									</div>
 									<input
 										type='text'
-										placeholder='Username'
+										placeholder='Användarnamn'
 										defaultValue={signInUsername}
 										onChange={this.onChangeSignInUsername}
 									/>
 									<br />
 									<input
 										type='password'
-										placeholder='Password'
+										placeholder='Lösenord'
 										defaultValue={signInPassword}
 										onChange={this.onChangeSignInPassword}
 									/>
@@ -231,7 +231,7 @@ export default class SignIn extends Component {
 											this.onSignIn()
 										}}
 									>
-										Sign In
+										Logga in
 									</button>
 								</div>
 								<br />

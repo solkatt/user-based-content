@@ -112,7 +112,7 @@ export default class SignUp extends Component {
 					{signUpError ? <p>{signUpError}</p> : null}
 
 					<div>
-						<p>Sign Up</p>
+						<p>Ny användare</p>
 						<FaTimesCircle
 							className='close-icon'
 							onClick={this.closeSignUp}
@@ -120,33 +120,33 @@ export default class SignUp extends Component {
 					</div>
 					<input
 						type='text'
-						placeholder='First Name'
+						placeholder='Förnamn'
 						value={signUpFirstName}
 						onChange={this.onChangeSignUpFirstName}
 					/>{' '}
 					<br />
 					<input
 						type='text'
-						placeholder='Last Name'
+						placeholder='Efternamn'
 						value={signUpLastName}
 						onChange={this.onChangeSignUpLastName}
 					/>{' '}
 					<br />
 					<input
 						type='text'
-						placeholder='Username'
+						placeholder='Användarnamn'
 						value={signUpUsername}
 						onChange={this.onChangeSignUpUsername}
 					/>{' '}
 					<br />
 					<input
 						type='password'
-						placeholder='Password'
+						placeholder='Lösenord'
 						value={signUpPassword}
 						onChange={this.onChangeSignUpPassword}
 					/>{' '}
 					<br />
-					<button onClick={this.onSignUp}>Sign Up</button>
+					<button onClick={this.onSignUp}>Registrera dig</button>
 				</div>
 			</div>
 		)
