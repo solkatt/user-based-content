@@ -97,6 +97,9 @@ exports.updatePost = async (req, res) => {
 
 // Create new post
 exports.createPost = async (req, res) => {
+    console.log("Hallå: ", req.body.user)
+    res.send(req.body)
+    /*
     try {
         let post = new Post({
             user: req.body.user,
@@ -120,6 +123,7 @@ exports.createPost = async (req, res) => {
         console.log(error)
         res.end()
     }
+    */
 }
 
 // Get image by filename and stream to browser

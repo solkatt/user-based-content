@@ -76,10 +76,7 @@ class Post extends React.Component {
               })
             }
             {userState.userId === this.props.data.user && <button className="removePostButton" onClick={this.removePost}>Ta bort inlägg</button>}
-            {/* {userState.userId === this.props.data.user && <button className="removePostButton" onClick={this.removePost}>Uppdatera inlägg</button>} */}
-
             </div>
-            
           </div>
         )}
       </UserConsumer>

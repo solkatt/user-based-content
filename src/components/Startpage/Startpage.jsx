@@ -32,8 +32,7 @@ class Startpage extends Component {
 	renderPosts = (posts) => {
         const allPosts = posts.map(post => { 
 			return (
-			<Post key={post._id} data={post}
-			 /> 
+			<Post key={post._id} data={post} /> 
 			 )})
         return allPosts
 	}

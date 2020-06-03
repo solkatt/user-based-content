@@ -5,9 +5,13 @@ import {
 	removeFromStorage,
 } from '../utils/storage'
 
-const UserContext = createContext({
-	username: '',
-})
+const UserContext = createContext()
+
+
+// const UserContext = createContext({
+// 	username: '',
+// })
+
 
 export class UserProvider extends Component {
 	constructor(props) {
@@ -17,13 +21,20 @@ export class UserProvider extends Component {
 			isLoading: false,
 			userId: '',
 			username: '',
+			token: '',
 			setUsername: () => {},
+			getUserData: this.getUserData,
 		}
 
 		this.setUsername = this.setUsername.bind(this)
 	}
 
 	componentDidMount() {
+	this.getUserData()
+	}
+
+
+	getUserData = () => {
 		const obj = getFromStorage('storage-object')
 		if (obj && obj.token) {
 			const { token } = obj
@@ -36,6 +47,7 @@ export class UserProvider extends Component {
 						this.setState({
 							userId: json.userId,
 							isLoading: false,
+							token: token,
 						})
 						console.log('JSON HÄR', json)
 						if (userId) {
@@ -70,6 +82,8 @@ export class UserProvider extends Component {
 		}
 	}
 
+
+
 	setUsername() {
 		alert('HEJHEJ')
 	}
@@ -100,5 +114,5 @@ export class UserProvider extends Component {
 		)
 	}
 }
-
+export default UserContext;
 export const UserConsumer = UserContext.Consumer

@@ -1,5 +1,5 @@
 const cors = require("cors")
-
+const {auth} = require('../controller/authController')
 module.exports = (app, gfs, upload, db) => {
     const controller = require('../controller/postController')
 
@@ -7,8 +7,8 @@ module.exports = (app, gfs, upload, db) => {
 
     app.delete("/api/post/remove/:id", (req, res) => controller.removePost(req, res, db))
 
-    // Create new post
-    app.post("/api/post/new", upload.single('file'), controller.createPost)
+    // Create new post > authorize, upload image, create post
+    app.post("/api/post/new", auth, upload.single('file'), controller.createPost)
 
     // Get all saved posts
     app.get("/api/post/all", controller.getAllPosts)

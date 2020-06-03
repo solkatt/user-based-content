@@ -1,5 +1,4 @@
 // SIGN UP
-
 POST http://localhost:3001/api/account/signup
 Content-Type: application/json
 
@@ -11,7 +10,6 @@ Content-Type: application/json
 }
 
 #####
-
 
 // SIGN IN
 POST http://localhost:3001/api/account/signin
@@ -30,9 +28,7 @@ Content-Type: application/json
 GET http://localhost:3001/api/account/verify?token=5eb93832d7890a16ca14ae04
 Content-Type: application/json
 
-
 #####
-
 
 // LOGOUT
 GET http://localhost:3001/api/account/logout?token=5eb955ea59c00b04e19eb368
@@ -40,27 +36,16 @@ Content-Type: application/json
 
 
 #####
-
-
-
-
-
-
-///////////
 GET http://localhost:3001/test
 Content-Type: application/json
 
-
 #####
-
 
 GET http://localhost:3001/api/account/user/data?token=5ebaef1f31d1e08ba09b4824
 Content-Type: application/json
 
 
 #####
-
-
 
 POST http://localhost:3001/api/post/new
 Content-Type: application/json
@@ -74,10 +59,8 @@ Content-Type: application/json
 
 #####
 
-
 GET http://localhost:3001/api/account/user/user?userId=5eb9cb96fd99ad1159bdc659
 Content-Type: application/json
-
 
 ########
 
