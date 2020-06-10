@@ -6,11 +6,6 @@ const router = express.Router()
 
 router.use(express.json())
 
-router.get('/', (req, res, next) => {
-	console.log('YJEEA USER')
-	res.send('hej')
-})
-
 // RETURNS USER ID
 router.get('/data', (req, res, next) => {
 	// Get the token
@@ -131,11 +126,11 @@ router.get('/:id', (req, res, next) => {
 		},
 		(error, users) => {
 			if (error) {
-				res.status(500).send(error)
-			} else if (users.username === null || users.username === undefined) {
-				res.status(500).send({ success: false, message: "No user found" })
+				res.json({ success: false, message: "Error occured", error: error })
+			} else if (users === null || users.username === null || users.username === undefined) {
+				res.json({ success: false, message: "No user found" })
 			} else {
-				res.send({ username: users.username })
+				res.json({ success: true, username: users.username })
 			}
 		}
 	)

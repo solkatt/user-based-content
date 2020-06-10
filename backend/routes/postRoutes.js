@@ -1,5 +1,6 @@
 const cors = require("cors")
-const {auth} = require('../controller/authController')
+const { auth } = require('../controller/authController')
+
 module.exports = (app, gfs, upload, db) => {
     const controller = require('../controller/postController')
 
@@ -7,8 +8,14 @@ module.exports = (app, gfs, upload, db) => {
 
     app.delete("/api/post/remove/:id", (req, res) => controller.removePost(req, res, db))
 
-    // Create new post > authorize, upload image, create post
-    app.post("/api/post/new", auth, upload.single('file'), controller.createPost)
+
+    /** (Authorize > Image upload >) Authorize > Save post
+     * The upload middleware handles formdata and must be the first one fired
+     * Therefore the first auth is directly inside the function body in server.js line 77
+     * If no image is attached, upload never fires, therefore there must be auth
+     * before the createPost middleware
+     */
+    app.post("/api/post/new", upload.single('file'), auth, controller.createPost)
 
     // Get all saved posts
     app.get("/api/post/all", controller.getAllPosts)
@@ -19,5 +26,5 @@ module.exports = (app, gfs, upload, db) => {
     // Get a single image from filename
     app.get("/api/post/image/:filename", (req, res) => controller.getImageByFilename(req, res, gfs))
 
-    app.put('/api/post/update/:id', (req, res) => controller.updatePost(req, res) )
+    app.put('/api/post/update/:id', (req, res) => controller.updatePost(req, res))
 }

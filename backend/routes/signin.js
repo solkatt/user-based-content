@@ -179,6 +179,7 @@ router.get('/verify', (req, res, next) => {
 			}
 		}
 	)
+	return false
 })
 
 router.get('/logout', (req, res, next) => {

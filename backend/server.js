@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require("body-parser")
-
+const { auth } = require("./controller/authController")
 const multer = require("multer")
 const Grid = require("gridfs-stream")
 const GridFsStorage = require("multer-gridfs-storage")
@@ -37,7 +37,6 @@ mongoose.connect(
 mongoose.set('useFindAndModify', false)
 
 const db = mongoose.connection
-
 // For initializing gridFsStorage (image storage)
 let gfs
 
@@ -71,7 +70,19 @@ const storage = new GridFsStorage({
     },
 })
 
-const upload = multer({ storage })
+// Image upload middleware
+const upload = multer({
+    storage,
+    fileFilter: async function (req, file, cb) {
+        const authorized = await auth(req)
+        // continue uploading image and creating post if validated user session
+        if (authorized === true) {
+            cb(null, true)
+            return
+        }
+        cb(new Error("Failed uploading image"), false)
+    }
+})
 
 // Routes
 const signin = require('./routes/signin')
@@ -79,10 +90,6 @@ const currentUser = require('./routes/getCurrentUser')
 
 app.use('/api/account/', signin)
 app.use('/api/account/user', currentUser)
-
-app.get('/test', (req, res) => {
-    res.send('TJEENA')
-})
 
 app.listen(port, () => {
     console.log(`
