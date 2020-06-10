@@ -97,12 +97,11 @@ exports.updatePost = async (req, res) => {
 
 // Create new post
 exports.createPost = async (req, res) => {
-    console.log("Hallå: ", req.body.user)
-    res.send(req.body)
-    /*
+    console.log("Hallå: ", req.body, req.userId)
+
     try {
         let post = new Post({
-            user: req.body.user,
+            user: req.userId,
             title: req.body.title,
             text: req.body.text
         })
@@ -115,6 +114,7 @@ exports.createPost = async (req, res) => {
         }
         // Save post
         const saved = await post.save()
+        console.log(saved)
         res.status(200).send({
             success: true,
             message: "Successfully saved post"
@@ -123,7 +123,6 @@ exports.createPost = async (req, res) => {
         console.log(error)
         res.end()
     }
-    */
 }
 
 // Get image by filename and stream to browser

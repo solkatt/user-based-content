@@ -1,21 +1,46 @@
-function auth (req, res, next) {
+const UserSession = require("../models/UserSession")
 
-const token = req.body.user
-
-    console.log('HÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄR', token)
-    console.log(req.body.formData)
-    if (!token) return res.status(401).send({ error: 'Access Denied' })
+async function auth(req, res, next) {
+    // Immediately deny if token is missing in request
+    if (!req.body.token) {
+        if (res !== null) return res.status(401).send({ success: false, message: 'Access denied' })
+        return false
+    } 
 
     try {
-// check token against session tokens i DB 
+        // Verify token is one of a kind and not deleted
+        const userSession = await UserSession.findOne(
+            {
+                _id: req.body.token,
+                isDeleted: false,
+            })
+        if (!userSession) {
+            if (res !== undefined) {
+                return res.json({
+                    success: false,
+                    message: 'Error: Server Error',
+                })
+            }
+            return false
+        }
 
-        next()
-    } catch(err) {
-        res.status(400).json({ message: 'Invalid Token'})
+        // Pass userId in req.body for use in createPost middleware
+        // Must be put in either req.local or req.body, 
+        // because 'response' is not passed along from multer to this middleware
+        req.userId = userSession.userId
+
+        if (typeof next === "function") {
+            next()
+        }
+        return true
+    } catch (err) {
+        console.log("Error ", err)
+        if (res !== undefined) {
+            res.status(500).json({ success: false, message: 'Unknown server error occured', error: err })
+        }
+        return false
     }
 }
 
 
-module.exports = {
-    auth
-}
+module.exports = { auth }
