@@ -6,7 +6,7 @@ module.exports = (app, gfs, upload, db) => {
 
     app.use(cors())
 
-    app.delete("/api/post/remove/:id", (req, res) => controller.removePost(req, res, db))
+    app.delete("/api/post/remove/:token", auth, (req, res) => controller.removePost(req, res, db))
 
 
     /** (Authorize > Image upload >) Authorize > Save post

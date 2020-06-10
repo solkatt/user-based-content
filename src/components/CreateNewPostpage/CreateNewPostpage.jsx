@@ -153,7 +153,7 @@ class Postpage extends Component {
       formData.append("file", this.state.file)
 
       // Make request
-      fetch("http://localhost:3001/api/post/new", {
+      fetch("http://localhost:3001/api/post/new?token=" + token, {
         method: "POST",
         body: formData,
       }).then(res => res.json())
