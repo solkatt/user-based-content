@@ -26,23 +26,23 @@ router.get('/data', (req, res, next) => {
 		},
 		(err, sessions) => {
 			if (err) {
-				return res.send({
+				return res.json({
 					success: false,
 					message: 'Error: Server Error',
 				})
 			}
 
 			if (sessions.length == null) {
-				return res.send({
+				return res.json({
 					success: false,
 					message: 'Error: Invalid',
 				})
 			} else if (sessions[0] !== undefined) {
-				return res.send({ success: true, userId: sessions[0].userId })
+				return res.json({ success: true, userId: sessions[0].userId })
 			} else {
 				return res
-					.status(500)
-					.send({ success: false, message: 'Unknown error' })
+					
+					.json({ success: false, message: 'Unknown error' })
 			}
 		}
 	)
@@ -62,26 +62,24 @@ router.get('/user', (req, res, next) => {
 		},
 		(err, users) => {
 			if (err) {
-				return res.send({
+				return res.json({
 					success: false,
 					message: 'Error: Server Error',
 				})
 			}
 
 			if (users.length == null) {
-				return res.send({
+				return res.json({
 					success: false,
 					message: 'Error: Invalid',
 				})
 			} else if (users[0] !== undefined) {
-				return res.send({
+				return res.json({
 					success: true,
 					username: users[0].username,
 				})
 			} else {
-				return res
-					.status(500)
-					.send({ success: false, message: 'Unknown error' })
+				return res.json({ success: false, message: 'Unknown error' })
 			}
 		}
 	)
@@ -131,9 +129,9 @@ router.get('/:id', (req, res, next) => {
 		},
 		(error, users) => {
 			if (error) {
-				res.status(500).send(error)
-			} else if (users.username === null || users.username === undefined) {
-				res.status(500).send({ success: false, message: "No user found" })
+				res.send(error)
+			} else if (users === null || users.username === null || users.username === undefined) {
+				res.send({ success: false, message: "No user found" })
 			} else {
 				res.send({ username: users.username })
 			}

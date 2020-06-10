@@ -4,9 +4,9 @@ const token = req.body.user
 
     console.log('HÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄR', token)
     console.log(req.body.formData)
-    if (!token) return res.status(401).send({ error: 'Access Denied' })
-
+    
     try {
+        if (!token) return res.status(401).json({ error: 'Access Denied' })
 // check token against session tokens i DB 
 
         next()
