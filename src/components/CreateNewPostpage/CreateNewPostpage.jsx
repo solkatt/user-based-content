@@ -71,10 +71,10 @@ class Postpage extends Component {
                 <div className="previewImage">
                   <p>Uppladdad bild:</p>
                   {this.state.fileURL !== "" &&
-                  this.state.fileURL !== null &&
-                  this.state.fileURL !== undefined ? (
-                    <img src={this.state.fileURL} alt="" />
-                  ) : null}
+                    this.state.fileURL !== null &&
+                    this.state.fileURL !== undefined ? (
+                      <img src={this.state.fileURL} alt="" />
+                    ) : null}
                 </div>
                 <button
                   className={
@@ -128,7 +128,7 @@ class Postpage extends Component {
    */
   handleSubmit(event) {
     event.preventDefault();
-    alert(this.context.token);
+    console.log("Context Token ", this.context.token);
     const user = event.target.name;
     if (event.target.value === "Post") {
       const { file, title, text } = this.state;
@@ -147,20 +147,17 @@ class Postpage extends Component {
       }
 
       const token = this.context.token;
-      console.log("HÄÄÄÄÄÄÄR", token);
+      console.log("Context Token i fetch", token);
       // Get input data
       let formData = new FormData(this.formRef.current);
-      formData.delete("file");
-      formData.append("user", user);
-      // Add file to request if it exists
-      if (file) {
-        formData.append("file", this.state.file);
-      }
+      formData.delete("file")
       formData.append("token", token);
+      formData.append("file", this.state.file);
+
       // Make request
       fetch("http://localhost:3001/api/post/new", {
         method: "POST",
-        body: {"token":JSON.stringify(this.context.token)},
+        body: formData,
       })
         .then((res) => {
           if (res.error) {
