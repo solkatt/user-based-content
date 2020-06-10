@@ -2,16 +2,16 @@ const UserSession = require("../models/UserSession")
 
 async function auth(req, res, next) {
     // Immediately deny if token is missing in request
-    if (!req.body.token) {
+    if ((req.body.token === "" && req.params.token === {}) ||
+        (req.body.token === {} && req.params.token === "")) {
         if (res !== null) return res.status(401).send({ success: false, message: 'Access denied' })
         return false
     } 
-
     try {
         // Verify token is one of a kind and not deleted
         const userSession = await UserSession.findOne(
             {
-                _id: req.body.token,
+                _id: req.body.token ? req.body.token : req.params.token,
                 isDeleted: false,
             })
         if (!userSession) {
