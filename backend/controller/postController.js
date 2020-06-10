@@ -16,11 +16,12 @@ exports.removePost = async (req, res, db) => {
             })
             if (removeChunks.deletedCount === 0 && removeFile.deletedCount === 0) {
                 console.log('No image was found');
-                return res.status(500).send({
+                return res.status(500).json({
                     success: true,
                     message: "No image was found"
                 })
             } else {
+                res.json({ success: true, message: "Successfully removed image" })
                 console.log("Successfully removed image")
             }
         }
@@ -41,10 +42,10 @@ exports.removePost = async (req, res, db) => {
                 }
             }
         })
-        res.send(removed)
+        res.json(removed)
     } catch (error) {
         console.log(error)
-        res.status(500).send()
+        res.status(500).json()
     }
 }
 
@@ -74,11 +75,11 @@ exports.updatePost = async (req, res) => {
                     console.log(err)
                 }
                 console.log('RESULT', result)
-                res.send()
+                res.json()
             }
 
     )
-    res.status(200).send({
+    res.status(200).json({
         success: true,
         message: "Successfully updated post"
     })
@@ -87,7 +88,7 @@ exports.updatePost = async (req, res) => {
 
     // // Save post
     // const saved = await post.save()
-    // res.status(200).send({ success: true, message: "Successfully saved post" })
+    // res.status(200).json({ success: true, message: "Successfully saved post" })
 } catch (error) {
     console.log(error)
     res.end()
@@ -97,8 +98,6 @@ exports.updatePost = async (req, res) => {
 
 // Create new post
 exports.createPost = async (req, res) => {
-    console.log("Hallå: ", req.body, req.userId)
-
     try {
         let post = new Post({
             user: req.userId,
@@ -114,14 +113,14 @@ exports.createPost = async (req, res) => {
         }
         // Save post
         const saved = await post.save()
-        console.log(saved)
-        res.status(200).send({
+        res.status(200).json({
             success: true,
-            message: "Successfully saved post"
+            message: "Successfully saved post",
+            post: saved
         })
     } catch (error) {
         console.log(error)
-        res.end()
+        res.json({ success: false, message: "Failed saving post" })
     }
 }
 
@@ -157,7 +156,7 @@ exports.getAllPosts = async (req, res) => {
         }).sort({
             '_id': 'desc'
         })
-        res.status(200).send({
+        res.status(200).json({
             allUserPosts: posts
         })
     } catch (error) {
@@ -171,20 +170,19 @@ exports.getUserPosts = async (req, res) => {
             user: req.params.id
         }, (error, userPosts) => {
             if (userPosts.length < 0) {
-                console.log("no posts ")
-                return res.status(404).send({
+                return res.status(404).json({
                     success: false,
                     message: "No posts were found"
                 })
             }
             return userPosts
         })
-        res.status(200).send({
+        res.status(200).json({
             allUserPosts: user
         })
     } catch (error) {
-        console.log(error)
-        res.status(500).send({
+        console.log("Error getting user posts ", error)
+        res.status(500).json({
             success: false,
             message: "Failed to fetch all posts"
         })

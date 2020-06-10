@@ -85,7 +85,6 @@ class Postpage extends Component {
                   type="submit"
                   id="new_post"
                   value="Post"
-                  name={userState.userId}
                   onClick={this.handleSubmit}
                 >
                   Posta inlägg
@@ -128,8 +127,7 @@ class Postpage extends Component {
    */
   handleSubmit(event) {
     event.preventDefault();
-    console.log("Context Token ", this.context.token);
-    const user = event.target.name;
+
     if (event.target.value === "Post") {
       const { file, title, text } = this.state;
       const inputs = { file, title, text };
@@ -147,28 +145,28 @@ class Postpage extends Component {
       }
 
       const token = this.context.token;
-      console.log("Context Token i fetch", token);
-      // Get input data
+      
+      // Get input data and put file last
       let formData = new FormData(this.formRef.current);
       formData.delete("file")
-      formData.append("token", token);
-      formData.append("file", this.state.file);
+      formData.append("token", token)
+      formData.append("file", this.state.file)
 
       // Make request
       fetch("http://localhost:3001/api/post/new", {
         method: "POST",
         body: formData,
-      })
+      }).then(res => res.json())
         .then((res) => {
-          if (res.error) {
-            // access denied
+          if (!res.success) {
+            alert(`${res.message}. You must be logged in to create a post`)
             return;
           }
           // Set state with fileName and then redirect
           this.setState({ fileName: this.state.file.name, redirect: true });
           return;
         })
-        .catch((error) => console.log());
+        .catch((error) => console.log(error));
     } else if (event.target.value === "Delete") {
       console.log("Delete");
       // Ta bort från databasen...

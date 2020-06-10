@@ -51,10 +51,10 @@ POST http://localhost:3001/api/post/new
 Content-Type: application/json
 
 {
-    "id": "923421fjsd",
-    "user": "Kalle",
     "title": "kmf",
-    "text": "mkds"
+    "text": "mkds",
+    "token": "dethärkommerintefunkaaaa",
+    "file": ""
 }
 
 #####
