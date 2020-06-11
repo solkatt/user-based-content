@@ -49,7 +49,6 @@ export class UserProvider extends Component {
 							isLoading: false,
 							token: token,
 						})
-						console.log('JSON HÄR', json)
 						if (userId) {
 							await fetch('/api/account/user/user?userId=' + userId)
 								.then((res) => res.json())
@@ -59,12 +58,10 @@ export class UserProvider extends Component {
 											username: json.username,
 											isLoading: false,
 										})
-										console.log('JSON HÄR', json)
 									} else {
 										this.setState({
 											isLoading: false,
 										})
-										console.log('ELSE')
 									}
 								})
 						}
@@ -72,7 +69,6 @@ export class UserProvider extends Component {
 						this.setState({
 							isLoading: false,
 						})
-						console.log('ELSE')
 					}
 				})
 		} else {
@@ -97,12 +93,10 @@ export class UserProvider extends Component {
 			const result = await fetch("/api/account/user/data?token=" + token)
 				.then(res => res.json())
 				.then(json => {
-					console.log("JSON", json)
 					if (json.success) {
 						return json.userId
 					}
 				})
-			console.log("hello", result)
 			return result
 		} catch (error) {
 
