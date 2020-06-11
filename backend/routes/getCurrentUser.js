@@ -7,14 +7,14 @@ const router = express.Router()
 router.use(express.json())
 
 // RETURNS USER ID
-router.get('/data', (req, res, next) => {
+router.get('/data', async (req, res, next) => {
 	// Get the token
 
 	const { query } = req
 	const { token } = query
 
 	//Verify Token is ine of a kind and not deleted
-	UserSession.find(
+	await UserSession.findOne(
 		{
 			_id: token,
 			isDeleted: false,
@@ -27,13 +27,13 @@ router.get('/data', (req, res, next) => {
 				})
 			}
 
-			if (sessions.length == null) {
+			if (!sessions) {
 				return res.send({
 					success: false,
 					message: 'Error: Invalid',
 				})
-			} else if (sessions[0] !== undefined) {
-				return res.send({ success: true, userId: sessions[0].userId })
+			} else if (sessions !== undefined) {
+				return res.send({ success: true, userId: sessions.userId })
 			} else {
 				return res
 					.status(500)

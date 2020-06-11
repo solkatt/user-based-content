@@ -189,7 +189,7 @@ exports.getUserPosts = async (req, res) => {
             user: req.params.id
         }, (error, userPosts) => {
             if (userPosts.length < 0) {
-                return res.status(404).json({
+                return res.json({
                     success: false,
                     message: "No posts were found"
                 })
@@ -197,6 +197,7 @@ exports.getUserPosts = async (req, res) => {
             return userPosts
         })
         res.status(200).json({
+            success: true,
             allUserPosts: user
         })
     } catch (error) {
