@@ -7,9 +7,7 @@ import './index.css'
 import Wrapper from "./components/Wrapper/Wrapper";
 import Startpage from "./components/Startpage/Startpage";
 import Postpage from "./components/CreateNewPostpage/CreateNewPostpage";
-import UserPostspage from "./components/YourPostspage/YourPostspage";
-import Editpage from "./components/EditPostspage/EditPostspage";
-
+import YourPostspage from "./components/YourPostspage/YourPostspage";
 
 function App() {
   return (
@@ -29,29 +27,12 @@ function App() {
             </Wrapper>
           </Route>
 
-          <Route exact path="/edit">
-            <Wrapper>
-              <Editpage />
-            </Wrapper>
-          </Route>
-
           <Route exact path="/post">
-            <UserConsumer>
-              {(userState) => (
                 <Wrapper>
-                  <UserPostspage user={userState}/>
+                  <YourPostspage />
                 </Wrapper>
-              )}
-            </UserConsumer>
           </Route> 
 
-
-
-          {/* <Route path="/new-post">
-          <Wrapper>
-            <CreatePostPage />
-          </Wrapper>
-        </Route> */}
         </Switch>
       </UserProvider>
     </Router>
@@ -59,25 +40,3 @@ function App() {
 }
 
 export default App
-
-
-
-// import React from 'react';
-// import {BrowserRouter as Router,Route,
-//  Redirect,Switch} from 'react-router-dom';
-// import Home from './App.js';
-// import Tutorials from './tutorials.js';
-
-// function Routes(){
-//     return (
-//     <Router>
-//       <div>
-//         <Switch>
-//            <Route path="/" component = {Home}>
-//            <Redirect from='/blog/' to="/tutorials/" />
-//            <Route path="/tutorials/" component={About} />
-//         </Switch>
-//       </div>
-//     </Router>
-//     )
-// }

@@ -22,7 +22,7 @@ export class UserProvider extends Component {
 			userId: '',
 			username: '',
 			token: '',
-			setUsername: () => {},
+			setUsername: () => { },
 			getUserData: this.getUserData,
 		}
 
@@ -30,18 +30,18 @@ export class UserProvider extends Component {
 	}
 
 	componentDidMount() {
-	this.getUserData()
+		this.getUserData()
 	}
 
 
-	getUserData = () => {
-		const obj = getFromStorage('storage-object')
+	getUserData = async () => {
+		const obj = await getFromStorage('storage-object')
 		if (obj && obj.token) {
 			const { token } = obj
 			let userId = ''
-			fetch('/api/account/user/data?token=' + token)
+			await fetch('/api/account/user/data?token=' + token)
 				.then((res) => res.json())
-				.then((json) => {
+				.then(async (json) => {
 					if (json.success) {
 						userId = json.userId
 						this.setState({
@@ -51,7 +51,7 @@ export class UserProvider extends Component {
 						})
 						console.log('JSON HÄR', json)
 						if (userId) {
-							fetch('/api/account/user/user?userId=' + userId)
+							await fetch('/api/account/user/user?userId=' + userId)
 								.then((res) => res.json())
 								.then((json) => {
 									if (json.success) {
@@ -88,6 +88,43 @@ export class UserProvider extends Component {
 		alert('HEJHEJ')
 	}
 
+	getUserId = async () => {
+		try {
+			let token;
+			if (await getFromStorage('storage-object') !== null) {
+				token = await getFromStorage('storage-object').token;
+			}
+			const result = await fetch("/api/account/user/data?token=" + token)
+				.then(res => res.json())
+				.then(json => {
+					console.log("JSON", json)
+					if (json.success) {
+						return json.userId
+					}
+				})
+			console.log("hello", result)
+			return result
+		} catch (error) {
+
+		}
+	}
+
+
+	getUsername = async (userId) => {
+		try {
+			const result = await fetch('/api/account/user/user?userId=' + userId)
+				.then((res) => res.json())
+				.then((json) => {
+					if (json.success) {
+						return json.username
+					}
+				})
+			return result
+		} catch (error) {
+			return alert("Error getting username")
+		}
+	}
+
 	// IF USER ID
 
 	// async fetchUser() {
@@ -108,7 +145,7 @@ export class UserProvider extends Component {
 
 	render() {
 		return (
-			<UserContext.Provider value={this.state}>
+			<UserContext.Provider value={this.state, { getUsername: this.getUsername, getUserId: this.getUserId }}>
 				{this.props.children}
 			</UserContext.Provider>
 		)

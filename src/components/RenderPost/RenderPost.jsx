@@ -5,12 +5,13 @@ import UserContext from "../../contexts/UserContext";
 import { getFromStorage } from "../../utils/storage";
 
 class Post extends React.Component {
-
+static contextType = UserContext
   constructor(props) {
     super(props)
     this.state = {
       isDeleted: false,
-      username: undefined
+      userId: "",
+      username: ""
     }
     this.removePost = this.removePost.bind(this)
     this.abortController = new AbortController()
@@ -41,18 +42,14 @@ class Post extends React.Component {
     this.abortController.abort()
   }
 
-  componentDidMount() {
-    this.state.username === undefined && this.props.data.user !== undefined && this.fetchUsername(this.props.data.user)
+  async getUsername() {
+    const id = await this.context.getUserId()
+    const name = await this.context.getUsername(id)
+    this.setState({ username: name, userId: id })
   }
 
-  fetchUsername(userId) {
-    fetch(`http://localhost:3001/api/account/user/${userId}`,
-      {
-        method: "GET",
-        signal: this.abortController.signal
-      }).then(res => res.json())
-      .then(json => this.setState({ username: json.username }))
-      .catch(error => console.log(error))
+  componentWillMount() {
+    this.getUsername()
   }
 
   renderDate = (postDate) => {
@@ -63,7 +60,7 @@ class Post extends React.Component {
   }
 
   render() {
-    const { isDeleted } = this.state
+    const { isDeleted, username, userId } = this.state
     return (
       <UserConsumer>
         {(userState) => (
@@ -92,7 +89,8 @@ class Post extends React.Component {
                   } else { return null }
                 })
               }
-              {userState.userId === this.props.data.user && <button className="removePostButton" onClick={this.removePost}>Ta bort inlägg</button>}
+              {window.location.pathname !== "/" && userId === this.props.data.user &&
+                <><button className="removePostButton" onClick={this.removePost}>Ta bort inlägg</button>{this.props.children}</> }
             </div>
           </div>
         )}

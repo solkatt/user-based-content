@@ -17,10 +17,7 @@ import UserContext from '../../contexts/UserContext'
 //
 
 export default class SignIn extends Component {
-
-    static contextType = UserContext
-
-
+  static contextType = UserContext
   constructor(props) {
     super(props);
     this.state = {
@@ -32,6 +29,7 @@ export default class SignIn extends Component {
       createPost: false,
       userPosts: false,
       backToStartpage: false,
+      username: ""
     };
 
     this.onChangeSignInUsername = this.onChangeSignInUsername.bind(this);
@@ -98,16 +96,16 @@ export default class SignIn extends Component {
       .then((json) => {
         if (json.success) {
           setInStorage("storage-object", { token: json.token });
-			console.log("success")
+          console.log("success")
           this.setState({
             signInError: json.message,
             isLoading: false,
             signInPassword: "",
             // signInUsername: '',
             token: json.token,
-		  });
-		  
-		  {this.context.getUserData()}
+          });
+
+          { this.context.getUserData() }
         } else {
           this.setState({
             signInError: json.message,
@@ -165,6 +163,16 @@ export default class SignIn extends Component {
   openSignUp() {
     let popUp = document.querySelector(".sign-up-container");
     popUp.classList.remove("hidden");
+  }
+
+  async getUsername() {
+      const userId = await this.context.getUserId()
+      const user = await this.context.getUsername(userId)
+      this.setState({ username: user })
+  }
+
+  componentWillMount() {
+    this.getUsername()
   }
 
   render() {
@@ -256,8 +264,7 @@ export default class SignIn extends Component {
       <UserConsumer>
         {(userState) => (
           <div className="profileContainer">
-            {userState.setUsername()}
-            <h3>Hej {userState.username}! </h3>
+            <h3>Hej {this.state.username !== "" && this.state.username}! </h3>
             {this.props.yourPostsButton && (
               <button
                 type="button"
