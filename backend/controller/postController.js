@@ -207,3 +207,11 @@ exports.getUserPosts = async (req, res) => {
         })
     }
 }
+
+exports.checkIfHasImage = async (postId) => {
+    const post = await Post.findOne({ _id: postId })
+    if (post.image !== {} && post.image !== undefined && post.image.imageId !== "" && post.image.imageId !== undefined) {
+        return post
+    }
+    return false
+}
