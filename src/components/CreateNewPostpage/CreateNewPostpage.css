@@ -1,4 +1,4 @@
-.editPostContainer, .editPostContainer * {
+.editPostContainer, .editPostContainer > * {
     margin: .5rem;
     outline: none;
     box-sizing: border-box;
@@ -34,12 +34,12 @@
     width: fit-content;
 }
 
-.valid {
+.editPostContainer .valid, .valid {
     cursor: pointer;
     background-color: rgb(17, 75, 95);
 }
 
-.invalid {
+.editPostContainer .invalid, .invalid {
     background-color: #C6DABF;
 }
 

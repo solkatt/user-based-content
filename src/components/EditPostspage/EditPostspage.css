@@ -1,0 +1,30 @@
+img {
+    max-width: 50vw;
+    max-height: 250px;
+    object-fit: contain;
+}
+
+.upload {
+    display: flex;
+    align-content: center;
+}
+
+.upload > p {
+    align-self: center;
+}
+
+.upload > img {
+    cursor: pointer;
+    background-color: #C6DABF;
+    border-radius: 50%;
+    padding: .5rem;
+    transition: background-color 500ms ease;
+}
+
+.upload > img:hover {
+    background-color: rgb(17, 75, 95);
+}
+
+.upload > * {
+    margin: 1rem .25rem;
+}

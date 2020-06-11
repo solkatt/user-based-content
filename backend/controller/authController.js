@@ -34,7 +34,7 @@ async function auth(req, res, next) {
         }
         return true
     } catch (err) {
-        console.log("Error ", err)
+        console.log("Error: ", err.message)
         if (res !== undefined) {
             res.status(500).json({ success: false, message: 'Unknown server error occured', error: err })
         }

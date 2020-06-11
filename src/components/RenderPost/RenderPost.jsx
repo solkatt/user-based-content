@@ -2,9 +2,9 @@ import React from "react";
 import "./RenderPost.css";
 import { UserConsumer } from "../../contexts/UserContext";
 import UserContext from "../../contexts/UserContext";
+import { getFromStorage } from "../../utils/storage";
 
 class Post extends React.Component {
-  static contextType = UserContext;
 
   constructor(props) {
     super(props)
@@ -16,15 +16,18 @@ class Post extends React.Component {
     this.abortController = new AbortController()
   }
 
-  removePost() {
-    const token = this.context.token;
-    
+  removePost = async () => {
+    let token;
+    if (await getFromStorage('storage-object') !== null) {
+      token = await getFromStorage('storage-object').token;
+    }
     fetch(`http://localhost:3001/api/post/remove/${token}?post=${this.props.data._id}`, {
       method: "DELETE",
       body: token,
       signal: this.abortController.signal
     }).then(res => res.json())
       .then((json) => {
+        console.log(json)
         if (!json.success) {
           alert("You are not authorized to remove this post")
           return;
@@ -68,10 +71,12 @@ class Post extends React.Component {
             {
               Object.keys(this.props.data).map((key) => {
                 if (key === 'image') {
+                  console.log(this.props.data)
+                  console.log(this.props.data.image.filename)
                   return <div key={this.props.data[key].filename}><img
                     className={`_${key} postImg`}
                     key={`_${key}`}
-                    src={`http://localhost:3001/api/post/image/${this.props.data[key].filename}`} /></div>
+                    src={this.props.data[key].filename === "" ? "" : `http://localhost:3001/api/post/image/${this.props.data[key].filename}`} /></div>
                 } else if (key === '__v') {
                   return null
                 } else { return null }

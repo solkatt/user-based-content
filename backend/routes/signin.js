@@ -9,11 +9,10 @@ router.use(express.json())
 // Sign Up
 router.post('/signup', (req, res, next) => {
 	const { body } = req
-	console.log('body', body)
+
 
 	let { firstName, lastName, username, password } = body
 
-	console.log('here')
 
 	if (!firstName) {
 		return res.json({
@@ -81,7 +80,7 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/signin', (req, res, next) => {
 	const { body } = req
-	// console.log(req)
+	// (req)
 	let { username, password } = body
 
 	if (!username) {

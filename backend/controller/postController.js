@@ -1,11 +1,9 @@
 const Post = require('../models/Post')
 const mongoose = require("mongoose")
-
 // Remove post from database
-/**
- * @param {Response} res
- */
 exports.removePost = async (req, res, db) => {
+    console.log(req.body)
+console.log(mongoose.Types.ObjectId(req.userId))
     const { post } = req.query
 
     try {
@@ -17,24 +15,22 @@ exports.removePost = async (req, res, db) => {
         if (!foundPost) {
             return res.json({ success: false, message: "Post was not found" })
         }
+        const { user } = foundPost
         // If post author does not match current user online
-        if (foundPost.user !== req.userId) {
+        if (user !== req.userId) {
+            
             return res.json({ success: false, message: "You are not allowed to delete that post" })
         }
         // If post contains an image - delete it
-        if (foundPost.image._id !== undefined && foundPost.image._id !== null) {
+        if (foundPost.image.imageId !== undefined && foundPost.image.imageId !== null && foundPost.image.imageId !== "") {
             const removeFile = await db.collection('images.files').deleteOne({
-                _id: mongoose.Types.ObjectId(foundPost.image._id)
+                _id: mongoose.Types.ObjectId(foundPost.image.imageId)
             })
-            const removeChunks = await db.collection('images.chunks').deleteOne({
-                'files_id': mongoose.Types.ObjectId(foundPost.image._id)
+            const removeChunks = await db.collection('images.chunks').deleteMany({
+                'files_id': mongoose.Types.ObjectId(foundPost.image.imageId)
             })
             if (removeChunks.deletedCount === 0 && removeFile.deletedCount === 0) {
-                console.log('No image was found, file has already been deleted or never existed in the first place');
-                return res.status(500).json({
-                    success: true,
-                    message: "No image was found"
-                })
+                console.log('No image was found, file has already been deleted or never existed in the first place, but keep deleting post');
             }
         }
         // Delete post
@@ -68,49 +64,53 @@ exports.removePost = async (req, res, db) => {
     }
 }
 
-
-exports.updatePost = async (req, res) => {
-
-    console.log('REQ PARAMS', req.params.id)
-    console.log('REQ:', req.body)
+exports.updatePost = async (req, res, db) => {
     try {
-        let post = new Post({
-            user: req.body.user,
+        const oldPost = await Post.findOne({ _id: req.params.id })
+        
+        if (!oldPost) {
+            return res.json({ success: false, message: "Post not found" })
+        }
+        if (req.userId !== oldPost.user) {
+            return res.json({ success: false, message: "Access denied" })
+        }
+        
+        const post = new Post({
+            user: req.userId,
             title: req.body.title,
             text: req.body.text,
         })
-        // If image was added
+        
+        // Assign old image if available
+        if (oldPost.image) {
+            post.image = oldPost.image
+        }
+        if (req.body.file === "") {
+            deleteImage(oldPost, db)
+            post.image = { imageId: "", filename: "" }
+
+        }
+        // Assign or replace if image file attached to request
         if (req.file) {
             post.image = {
-                _id: req.file.id,
-                filename: req.file.originalname
+                imageId: req.file.id,
+                filename: req.file.filename
             }
         }
-        //UPDATE POST
-        Post.findByIdAndUpdate(req.params.id, {
-            $set: req.body
-        }, function (err, result) {
-            if (err) {
-                console.log(err)
-            }
-            console.log('RESULT', result)
-            res.json()
-        }
+        console.log("NEW POST", post)
+        console.log("OLDPOST", oldPost)
+        console.log("REQ FILE", req.file)
+        console.log("REQ BODY", req.body)
+        const { user, text, title, image } = post
 
-        )
-        res.status(200).json({
-            success: true,
-            message: "Successfully updated post"
-        })
-
-
-
-        // // Save post
-        // const saved = await post.save()
-        // res.status(200).json({ success: true, message: "Successfully saved post" })
+        const updatedPost = new Post(Object.assign(oldPost, { user, text, title, image }))
+console.log(updatedPost)
+        await updatedPost.save()
+        req.userId = null
+        res.json({ success: true, message: "Success", result: updatedPost })
     } catch (error) {
         console.log(error)
-        res.end()
+        res.json({ success: false, message: "Failed updating post", error: error })
     }
 
 }
@@ -126,8 +126,8 @@ exports.createPost = async (req, res) => {
         // If image was added
         if (req.file) {
             post.image = {
-                _id: req.file.id,
-                filename: req.file.originalname
+                imageId: req.file.id,
+                filename: req.file.filename
             }
         }
         // Save post
@@ -138,8 +138,8 @@ exports.createPost = async (req, res) => {
             post: saved
         })
     } catch (error) {
-        console.log(error)
-        res.json({ success: false, message: "Failed saving post" })
+        console.log("error creating post", error)
+        res.json({ success: false, message: "Failed saving post", error: error })
     }
 }
 
@@ -214,4 +214,15 @@ exports.checkIfHasImage = async (postId) => {
         return post
     }
     return false
+}
+
+async function deleteImage(post, db) {
+    console.log("DB: ",JSON.stringify(post.image.imageId))
+    const removeFile = await db.collection('images.files').deleteOne({
+        _id: mongoose.Types.ObjectId(post.image.imageId)
+    })
+    const removeChunks = await db.collection('images.chunks').deleteMany({
+        "files_id": mongoose.Types.ObjectId(post.image.imageId)
+    }, (error) => console.log("Error deleting image", error))
+    return {removeChunks, removeFile}
 }
